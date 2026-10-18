@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
     final features = [
       ['القرآن الكريم', 'قراءة سور مختارة', Icons.menu_book, 'quran'],
       ['مواقيت الصلاة', 'الأوقات والأذان', Icons.access_time, 'later'],
-      ['الأدعية', 'أذكار وأدعية', Icons.volunteer_activism, 'later'],
+      ['الأدعية والأذكار', 'تسبيح واستغفار وصلاة', Icons.volunteer_activism, 'adhkar'],
       ['الزيارات', 'نصوص الزيارات', Icons.mosque, 'later'],
       ['اتجاه القبلة', 'تحديد اتجاه القبلة', Icons.explore, 'later'],
       ['المكتبة الإسلامية', 'كتب ومصادر موثوقة', Icons.local_library, 'later'],
@@ -67,6 +67,8 @@ class HomePage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const QuranPage()));
                 } else if (f[3] == 'tasbih') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const TasbihPage()));
+                } else if (f[3] == 'adhkar') {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const AdhkarPage()));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('قسم ' + f[0] + ' قيد التطوير')));
                 }
@@ -96,7 +98,7 @@ class QuranPage extends StatelessWidget {
     Surah('الفاتحة', 1, ['بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ','الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ','الرَّحْمَٰنِ الرَّحِيمِ','مَالِكِ يَوْمِ الدِّينِ','إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ','اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ','صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ']),
     Surah('الإخلاص', 112, ['قُلْ هُوَ اللَّهُ أَحَدٌ','اللَّهُ الصَّمَدُ','لَمْ يَلِدْ وَلَمْ يُولَدْ','وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ']),
     Surah('الفلق', 113, ['قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ','مِن شَرِّ مَا خَلَقَ','وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ','وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ','وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ']),
-    Surah('الناس', 114, ['قُلْ أَعُوذُ بِرَبِّ النَّاسِ','مَلِكِ النَّاسِ','إِلَٰهِ النَّاسِ','مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ','الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ','مِنَ الْجِنَّةِ وَالنَّاسَ']),
+    Surah('الناس', 114, ['قُلْ أَعُوذُ بِرَبِّ النَّاسِ','مَلِكِ النَّاسِ','إِلَٰهِ النَّاسِ','مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ','الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ','مِنَ الْجِنَّةِ وَالنَّاسِ']),
   ];
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -142,6 +144,83 @@ class SurahPage extends StatelessWidget {
         style: TextStyle(color: Colors.white54, fontSize: 12, height: 1.5)),
     ]),
   );
+}
+
+
+class AdhkarPage extends StatefulWidget {
+  const AdhkarPage({super.key});
+  @override
+  State<AdhkarPage> createState() => _AdhkarPageState();
+}
+
+class _AdhkarPageState extends State<AdhkarPage> {
+  final List<Map<String, Object>> adhkar = const [
+    {'title': 'الصلاة على محمد وآل محمد', 'text': 'اللهم صل على محمد وآل محمد', 'target': 100},
+    {'title': 'الاستغفار', 'text': 'أستغفر الله ربي وأتوب إليه', 'target': 100},
+    {'title': 'التسبيح', 'text': 'سبحان الله والحمد لله ولا إله إلا الله والله أكبر', 'target': 100},
+  ];
+  int selected = 0;
+  int count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final item = adhkar[selected];
+    final target = item['target'] as int;
+    return Scaffold(
+      appBar: AppBar(title: const Text('الأدعية والأذكار')),
+      body: Padding(
+        padding: const EdgeInsets.all(22),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text('اختر الذكر', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            ...List.generate(adhkar.length, (i) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Card(
+                color: selected == i ? const Color(0xFF17483A) : panelGreen,
+                child: ListTile(
+                  title: Text(adhkar[i]['title'] as String),
+                  trailing: selected == i ? const Icon(Icons.check_circle, color: accentGold) : null,
+                  onTap: () => setState(() { selected = i; count = 0; }),
+                ),
+              ),
+            )),
+            const Spacer(),
+            Container(
+              padding: const EdgeInsets.all(22),
+              decoration: BoxDecoration(color: panelGreen, borderRadius: BorderRadius.circular(22),
+                border: Border.all(color: accentGold.withValues(alpha: .25))),
+              child: Column(children: [
+                Text(item['text'] as String, textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 24, height: 1.8, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 18),
+                Text(count.toString(), style: const TextStyle(fontSize: 54, color: accentGold, fontWeight: FontWeight.bold)),
+                Text('من ' + target.toString(), style: const TextStyle(color: Colors.white60)),
+                const SizedBox(height: 12),
+                LinearProgressIndicator(value: (count / target).clamp(0.0, 1.0),
+                  minHeight: 6, borderRadius: BorderRadius.circular(10), color: accentGold,
+                  backgroundColor: Colors.white12),
+              ]),
+            ),
+            const SizedBox(height: 18),
+            SizedBox(height: 58, child: FilledButton.icon(
+              onPressed: () => setState(() { if (count < target) count++; }),
+              icon: const Icon(Icons.touch_app),
+              label: const Text('سبّح', style: TextStyle(fontSize: 20)),
+              style: FilledButton.styleFrom(backgroundColor: accentGold, foregroundColor: deepGreen),
+            )),
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: () => setState(() => count = 0),
+              icon: const Icon(Icons.restart_alt), label: const Text('تصفير العدّاد'),
+            ),
+            const SizedBox(height: 12),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class TasbihPage extends StatefulWidget {
