@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                 } else if (f[3] == 'adhkar') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const AdhkarPage()));
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('قسم ' + f[0] + ' قيد التطوير')));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('قسم ' + (f[0] as String) + ' قيد التطوير')));
                 }
               },
               child: Ink(padding: const EdgeInsets.all(16),
