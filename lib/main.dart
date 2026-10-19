@@ -4,10 +4,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'app/app_theme.dart';
 
-// Compatibility aliases retained while legacy screens are migrated.
-const deepGreen = AppPalette.deepGreen;
-const panelGreen = AppPalette.panelGreen;
-const accentGold = AppPalette.accentGold;
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +14,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
+
+// Compatibility aliases retained while legacy screens are migrated.
+const deepGreen = AppPalette.deepGreen;
+const panelGreen = AppPalette.panelGreen;
+const accentGold = AppPalette.accentGold;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
