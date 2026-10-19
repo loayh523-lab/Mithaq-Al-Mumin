@@ -204,6 +204,18 @@
           "offline": false
         },
         {
+          "title": "دعاؤه في الصلاة على حملة العرش",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الصلاة على مصدقي الرسل",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
           "title": "دعاؤه لنفسه وخاصته",
           "kind": "index",
           "source": null,
@@ -228,13 +240,13 @@
           "offline": false
         },
         {
-          "title": "دعاؤه في طلب المغفرة",
+          "title": "دعاؤه في الاشتياق إلى طلب المغفرة",
           "kind": "index",
           "source": null,
           "offline": false
         },
         {
-          "title": "دعاؤه في الالتجاء إلى الله",
+          "title": "دعاؤه في اللجأ إلى الله تعالى",
           "kind": "index",
           "source": null,
           "offline": false
@@ -252,7 +264,7 @@
           "offline": false
         },
         {
-          "title": "دعاؤه في طلب الحوائج",
+          "title": "دعاؤه في طلب الحوائج إلى الله تعالى",
           "kind": "index",
           "source": null,
           "offline": false
@@ -270,7 +282,19 @@
           "offline": false
         },
         {
-          "title": "دعاؤه في طلب العفو",
+          "title": "دعاؤه في الاستقالة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه على الشيطان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في المحذورات",
           "kind": "index",
           "source": null,
           "offline": false
@@ -294,7 +318,7 @@
           "offline": false
         },
         {
-          "title": "دعاؤه عند الشدة وتعسر الأمور",
+          "title": "دعاؤه عند الشدة",
           "kind": "index",
           "source": null,
           "offline": false
@@ -306,7 +330,7 @@
           "offline": false
         },
         {
-          "title": "دعاؤه لوالديه",
+          "title": "دعاؤه لأبويه",
           "kind": "index",
           "source": null,
           "offline": false
@@ -330,13 +354,43 @@
           "offline": false
         },
         {
-          "title": "دعاؤه عند ضيق الرزق",
+          "title": "دعاؤه متفزعاً إلى الله تعالى",
           "kind": "index",
           "source": null,
           "offline": false
         },
         {
-          "title": "دعاؤه في قضاء الدين",
+          "title": "دعاؤه إذا قتر عليه الرزق",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في المعونة على قضاء الدين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في طلب التوبة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه بعد صلاة الليل لنفسه",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الاستخارة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه إذا رأى مبتلى بفضيحة بذنب",
           "kind": "index",
           "source": null,
           "offline": false
@@ -354,7 +408,19 @@
           "offline": false
         },
         {
-          "title": "دعاؤه في الشكر لله",
+          "title": "دعاؤه في الشكر لله تعالى",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الاعتذار",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في طلب العفو والرحمة",
           "kind": "index",
           "source": null,
           "offline": false
@@ -378,7 +444,7 @@
           "offline": false
         },
         {
-          "title": "دعاؤه عند رؤية الهلال",
+          "title": "دعاؤه إذا نظر إلى الهلال",
           "kind": "index",
           "source": null,
           "offline": false
@@ -396,19 +462,31 @@
           "offline": false
         },
         {
+          "title": "دعاؤه للعيد والفطر والجمعة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
           "title": "دعاؤه في يوم عرفة",
           "kind": "index",
           "source": null,
           "offline": false
         },
         {
-          "title": "دعاؤه يوم الأضحى والجمعة",
+          "title": "دعاؤه يوم الأضحى ويوم الجمعة",
           "kind": "index",
           "source": null,
           "offline": false
         },
         {
-          "title": "دعاؤه في دفع كيد الأعداء",
+          "title": "دعاؤه في دفاع كيد الأعداء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الرهبة",
           "kind": "index",
           "source": null,
           "offline": false
@@ -421,6 +499,12 @@
         },
         {
           "title": "دعاؤه في الإلحاح على الله",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في التذلل لله",
           "kind": "index",
           "source": null,
           "offline": false
@@ -1328,5 +1412,5 @@
     "اللهم كن لوليك الحجة بن الحسن": "دعاء منقول في كتب الأدعية الإمامية؛ يلزم توثيق المصدر التفصيلي والصيغة.",
     "دعاء الفرج: إلهي عظم البلاء": "الدعاء المعروف بإلهي عظم البلاء؛ توجد اختلافات لفظية بين النسخ."
   },
-  "catalog_note": "العناوين غير المتوفرة نصوصها الكاملة هي فهرس فقط. لا تُعرض كأدعية مكتملة حتى يضاف نص موثق. قد يظهر الدعاء في أكثر من قسم للمناسبة، مع الاحتفاظ بنسخة نصية واحدة."
+  "catalog_note": "العناوين غير المتوفرة نصوصها الكاملة هي فهرس فقط. لا تُعرض كأدعية مكتملة حتى يضاف نص موثق. قد يظهر الدعاء في أكثر من قسم للمناسبة، مع الاحتفاظ بنسخة نصية واحدة. عناوين الصحيفة السجادية قورنت بفهرس مؤسسة الإمام زين العابدين عليه السلام."
 }
