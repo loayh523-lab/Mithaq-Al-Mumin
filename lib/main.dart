@@ -1449,6 +1449,8 @@ class ServicesHubPage extends StatelessWidget {
       _ServiceItem('دليل المناسبات', 'رمضان والأربعين والحج والزيارة', Icons.event_available_rounded, () => _open(context, const OccasionsPage(), 'دليل المناسبات')),
       _ServiceItem('مكتبة الأدعية', 'أدعية مختارة مع نصوص للقراءة', Icons.volunteer_activism_rounded, () => _open(context, const DuaLibraryPage(), 'مكتبة الأدعية')),
       _ServiceItem('مكتبة الزيارات', 'زيارة عاشوراء والزيارة الجامعة المختصرة', Icons.mosque_rounded, () => _open(context, const ZiyaratLibraryPage(), 'مكتبة الزيارات')),
+      _ServiceItem('تعقيبات الصلاة', 'أذكار وأعمال بعد الصلاة', Icons.spa_rounded, () => _open(context, const PrayerTaqibatPage(), 'تعقيبات الصلاة')),
+      _ServiceItem('أدعية الأيام', 'دعاء مناسب لكل يوم من الأسبوع', Icons.today_rounded, () => _open(context, const DailyDuasPage(), 'أدعية الأيام')),
     ];
     return ListView(padding: const EdgeInsets.all(16), children: [
       const Text('خدمات ميثاق المؤمن', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: accentGold)),
@@ -1687,4 +1689,49 @@ class _PrayerAlertsPageState extends State<PrayerAlertsPage> {
     const SizedBox(height: 10),
     OutlinedButton(onPressed: () async { await PrayerNotificationService.plugin.show(999, 'تجربة التنبيه', 'إذا ظهر هذا الإشعار فالإذن يعمل على جهازك.', const NotificationDetails(android: AndroidNotificationDetails(PrayerNotificationService.channelId, PrayerNotificationService.channelName, importance: Importance.max, priority: Priority.high))); }, child: const Text('اختبار الإشعار')),
   ]);
+}
+
+class PrayerTaqibatPage extends StatelessWidget {
+  const PrayerTaqibatPage({super.key});
+  @override Widget build(BuildContext context) => ListView(padding: const EdgeInsets.all(16), children: const [
+    Text('تعقيبات الصلاة', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: accentGold)),
+    SizedBox(height: 8),
+    Text('أعمال مشهورة في كتب الأدعية عند الإمامية. ترتيب الاستحباب وبعض التفاصيل قد يختلف؛ اعتمد النص الكامل من مصدر موثوق.', style: TextStyle(color: Colors.white60, height: 1.6)),
+    SizedBox(height: 14),
+    _TextPrayerCard(title: 'التكبير بعد الصلاة', source: 'ذكر مشهور بعد الصلاة', body: 'الله أكبر، الله أكبر، الله أكبر.'),
+    _TextPrayerCard(title: 'تسبيح الزهراء عليها السلام', source: 'التسبيح المعروف بعد الصلاة', body: 'الله أكبر ٣٤ مرة\nالحمد لله ٣٣ مرة\nسبحان الله ٣٣ مرة'),
+    _TextPrayerCard(title: 'آية الكرسي', source: 'سورة البقرة، الآية ٢٥٥', body: 'الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم له ما في السماوات وما في الأرض من ذا الذي يشفع عنده إلا بإذنه يعلم ما بين أيديهم وما خلفهم ولا يحيطون بشيء من علمه إلا بما شاء وسع كرسيه السماوات والأرض ولا يؤوده حفظهما وهو العلي العظيم.'),
+    _TextPrayerCard(title: 'سورة الإخلاص', source: 'سورة الإخلاص', body: 'بسم الله الرحمن الرحيم\nقل هو الله أحد، الله الصمد، لم يلد ولم يولد، ولم يكن له كفواً أحد.'),
+    _TextPrayerCard(title: 'سورة الفلق', source: 'سورة الفلق', body: 'بسم الله الرحمن الرحيم\nقل أعوذ برب الفلق، من شر ما خلق، ومن شر غاسق إذا وقب، ومن شر النفاثات في العقد، ومن شر حاسد إذا حسد.'),
+    _TextPrayerCard(title: 'سورة الناس', source: 'سورة الناس', body: 'بسم الله الرحمن الرحيم\nقل أعوذ برب الناس، ملك الناس، إله الناس، من شر الوسواس الخناس، الذي يوسوس في صدور الناس، من الجنة والناس.'),
+  ]);
+}
+
+class DailyDuasPage extends StatelessWidget {
+  const DailyDuasPage({super.key});
+  static const List<Map<String, String>> days = [
+    {'name':'الأحد','title':'طلب الرحمة','text':'يا الله ارحمني برحمتك، واغفر لي ولوالدي، واهدني لما تحب وترضى، وثبّت قلبي على طاعتك.'},
+    {'name':'الاثنين','title':'طلب التوفيق','text':'اللهم وفّقني للخير، وأعنّي على ذكرك وشكرك وحسن عبادتك، وبارك لي في وقتي وعلمي وعملي.'},
+    {'name':'الثلاثاء','title':'طلب الرزق الحلال','text':'اللهم ارزقني رزقاً حلالاً طيباً واسعاً، واصرف عني الحرام، واجعلني من الشاكرين.'},
+    {'name':'الأربعاء','title':'طلب العلم','text':'ربّ زدني علماً، وارزقني فهماً نافعاً وعملاً صالحاً، واجعل علمي سبباً للخير وخدمة عبادك.'},
+    {'name':'الخميس','title':'طلب المغفرة','text':'أستغفر الله ربي وأتوب إليه، اللهم اغفر لي ما قدّمت وما أخّرت، وأصلح سريرتي وعلانيتي.'},
+    {'name':'الجمعة','title':'الصلاة على محمد وآل محمد','text':'اللهم صلّ على محمد وآل محمد، وعجّل فرجهم، واجعلنا من المتمسكين بولايتهم والسائرين على نهجهم.'},
+    {'name':'السبت','title':'طلب الثبات','text':'اللهم ثبّتني على الحق، وارزقني حسن العاقبة، واحفظ أهلي وأحبتي، واكتب لنا الخير في الدنيا والآخرة.'},
+  ];
+  @override Widget build(BuildContext context) {
+    final today = DateTime.now().weekday % 7;
+    return ListView(padding: const EdgeInsets.all(16), children: [
+      const Text('أدعية الأيام', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: accentGold)),
+      const SizedBox(height: 8),
+      const Text('هذه صياغات دعائية عامة مرتبة للأيام وليست منسوبة إلى رواية أو إمام. للدعاء المأثور نضيف النص مع مصدره المحدد.', style: TextStyle(color: Colors.white60, height: 1.6)),
+      const SizedBox(height: 14),
+      for (var i = 0; i < days.length; i++)
+        Card(color: panelGreen, margin: const EdgeInsets.only(bottom: 11), child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(children: [Expanded(child: Text('دعاء يوم ${days[i]['name']}', style: const TextStyle(color: accentGold, fontSize: 18, fontWeight: FontWeight.bold))), if (i == today) const Chip(label: Text('اليوم'))]),
+          const SizedBox(height: 6), Text(days[i]['title']!, style: const TextStyle(fontWeight: FontWeight.w600)),
+          const SizedBox(height: 10), Text(days[i]['text']!, style: const TextStyle(fontSize: 17, height: 1.9)),
+          Align(alignment: Alignment.centerLeft, child: IconButton(tooltip: 'نسخ الدعاء', onPressed: () => Clipboard.setData(ClipboardData(text: days[i]['text']!)), icon: const Icon(Icons.copy_rounded, color: accentGold))),
+        ]))),
+    ]);
+  }
 }
