@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'app/app_theme.dart';
+import 'features/prayer_times/domain/prayer_schedule.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
@@ -112,24 +113,26 @@ class _HomePageState extends State<HomePage> {
 
   Widget home() {
     final now = DateTime.now();
-    final calculated = PrayerTimes(
+    final schedule = PrayerSchedule.forDate(
       coordinates: homeCoordinates,
       date: now,
-      calculationParameters: CalculationMethodParameters.jafari(),
     );
-    final prayerRows = <List<Object>>[
-      ['الفجر', calculated.fajr, Icons.wb_twilight],
-      ['الشروق', calculated.sunrise, Icons.wb_sunny_outlined],
-      ['الظهر', calculated.dhuhr, Icons.wb_sunny],
-      ['العصر', calculated.asr, Icons.sunny],
-      ['المغرب', calculated.maghrib, Icons.nights_stay_outlined],
-      ['العشاء', calculated.isha, Icons.nights_stay],
-    ];
-    final upcoming = prayerRows
-        .where((row) => row[0] != 'الشروق' && (row[1] as DateTime).isAfter(now))
+    final nextPrayer = schedule.nextPrayer(now: now);
+    final prayerIcons = <String, IconData>{
+      'الفجر': Icons.wb_twilight,
+      'الشروق': Icons.wb_sunny_outlined,
+      'الظهر': Icons.wb_sunny,
+      'العصر': Icons.sunny,
+      'المغرب': Icons.nights_stay_outlined,
+      'العشاء': Icons.nights_stay,
+    };
+    final prayers = schedule.entries
+        .map((entry) => <Object>[
+              entry.name,
+              entry.time,
+              prayerIcons[entry.name] ?? Icons.access_time,
+            ])
         .toList();
-    final nextPrayer = upcoming.isNotEmpty ? upcoming.first : prayerRows.first;
-    final prayers = prayerRows;
     return ListView(padding: const EdgeInsets.fromLTRB(16, 12, 16, 24), children: [
       glass(Row(children: [
         SizedBox(width: 54, height: 54, child: SvgPicture.asset('assets/logo.svg')),
@@ -163,7 +166,7 @@ class _HomePageState extends State<HomePage> {
           Icon(Icons.mosque_outlined, color: accentGold),
         ]),
         const SizedBox(height: 12),
-        Text('صلاة ${nextPrayer[0]} — ${_homeTime(nextPrayer[1] as DateTime)}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        Text('صلاة ${nextPrayer.name} — ${_homeTime(nextPrayer.time)}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         const SizedBox(height: 5),
         Text('المواقيت المحسوبة لمدينة $homeCity', style: const TextStyle(color: Colors.white60, fontSize: 13)),
         const SizedBox(height: 15),
