@@ -1614,8 +1614,16 @@ class _TextPrayerCard extends StatelessWidget {
   @override Widget build(BuildContext context) => Card(color: panelGreen, margin: const EdgeInsets.only(bottom: 12), child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Text(title, style: const TextStyle(color: accentGold, fontSize: 18, fontWeight: FontWeight.bold)),
     const SizedBox(height: 4), Text(source, style: const TextStyle(color: Colors.white54, fontSize: 12)),
-    const SizedBox(height: 12), Text(body, style: const TextStyle(fontSize: 17, height: 1.9)),
-    const SizedBox(height: 8), const Text('المعروض مقتطف وليس بديلاً عن النص الكامل من مصدر موثوق.', style: TextStyle(color: Colors.white38, fontSize: 11)),
+    const SizedBox(height: 12), SelectableText(body, style: const TextStyle(fontSize: 17, height: 1.9)),
+    const SizedBox(height: 8), const Text('المعروض هنا مقتطف؛ لا يُعرض على أنه النص الكامل.', style: TextStyle(color: Colors.white38, fontSize: 11)),
+    Align(alignment: Alignment.centerLeft, child: TextButton.icon(
+      onPressed: () async {
+        await Clipboard.setData(ClipboardData(text: '$title\n$source\n\n$body'));
+        if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم نسخ النص')));
+      },
+      icon: const Icon(Icons.copy_rounded, size: 18),
+      label: const Text('نسخ النص'),
+    )),
   ])));
 }
 
