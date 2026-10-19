@@ -103,6 +103,9 @@ jobs:
       - name: Analyze Dart code
         run: flutter analyze lib --no-fatal-infos --no-fatal-warnings
 
+      - name: Run Flutter tests
+        run: flutter test
+
       - name: Generate launcher icon from official logo
         run: |
           sudo apt-get update
