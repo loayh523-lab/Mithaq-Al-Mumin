@@ -33,6 +33,23 @@ jobs:
             flutter create --platforms=android --project-name mithaq_al_mumin --org com.mithaqalmumin .
           fi
 
+      - name: Download verified Uthmani Quran data
+        run: |
+          mkdir -p assets/quran
+          curl --fail --location --retry 3 --silent --show-error \
+            https://raw.githubusercontent.com/dotquran/corpus/main/processed/uthmani/quran-uthmani.json \
+            --output assets/quran/quran-uthmani.json
+          test -s assets/quran/quran-uthmani.json
+          grep -q '"source"[[:space:]]*:[[:space:]]*"Tanzil Project"' assets/quran/quran-uthmani.json
+          cat > assets/quran/ATTRIBUTION.txt <<'EOF'
+          Quran Arabic text: Tanzil Quran Text, Uthmani Version 1.1.
+          Copyright (C) Tanzil Project.
+          License: Creative Commons Attribution 3.0.
+          Source: https://tanzil.net/
+          The Quran text must not be modified. See https://tanzil.net/docs/Text_License
+          JSON packaging source: https://github.com/dotquran/corpus
+          EOF
+
       - name: Get dependencies
         run: flutter pub get
 
