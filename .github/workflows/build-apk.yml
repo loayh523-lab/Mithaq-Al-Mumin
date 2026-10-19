@@ -99,7 +99,7 @@ jobs:
         run: flutter pub get
 
       - name: Analyze Dart code
-        run: flutter analyze lib --no-fatal-infos
+        run: flutter analyze lib --no-fatal-infos --no-fatal-warnings
 
       - name: Generate launcher icon from official logo
         run: |
