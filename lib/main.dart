@@ -8,8 +8,15 @@ import 'package:adhan_dart/adhan_dart.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:timezone/timezone.dart' as tz;
 
-void main() => runApp(const MithaqApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PrayerNotificationService.initialize();
+  runApp(const MithaqApp());
+}
 
 const deepGreen = Color(0xFF071F1A);
 const panelGreen = Color(0xFF10372E);
@@ -118,7 +125,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 3),
           Text('رفيقك في العبادة والمعرفة', style: TextStyle(color: accentGold, fontSize: 12)),
         ])),
-        const Icon(Icons.notifications_none_rounded, color: accentGold),
+        IconButton(tooltip: 'إعدادات تنبيهات الصلاة', onPressed: () => open(const PrayerAlertsPage()), icon: const Icon(Icons.notifications_none_rounded, color: accentGold)),
       ])),
       const SizedBox(height: 12),
       Row(children: [
@@ -1578,4 +1585,107 @@ class _TextPrayerCard extends StatelessWidget {
     const SizedBox(height: 12), Text(body, style: const TextStyle(fontSize: 17, height: 1.9)),
     const SizedBox(height: 8), const Text('المعروض مقتطف وليس بديلاً عن النص الكامل من مصدر موثوق.', style: TextStyle(color: Colors.white38, fontSize: 11)),
   ])));
+}
+
+class PrayerNotificationService {
+  PrayerNotificationService._();
+  static final FlutterLocalNotificationsPlugin plugin = FlutterLocalNotificationsPlugin();
+  static const String channelId = 'prayer_times';
+  static const String channelName = 'تنبيهات مواقيت الصلاة';
+
+  static Future<void> initialize() async {
+    tzdata.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('Asia/Baghdad'));
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const settings = InitializationSettings(android: android);
+    await plugin.initialize(settings);
+  }
+
+  static Future<bool> requestPermission() async {
+    final android = plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    return await android?.requestNotificationsPermission() ?? false;
+  }
+
+  static Future<void> cancelPrayerAlerts() => plugin.cancelAll();
+
+  static Future<void> schedulePrayerAlerts(String city, Coordinates coordinates, {bool sound = true}) async {
+    await cancelPrayerAlerts();
+    final now = DateTime.now();
+    final names = <String>['الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء'];
+    for (var dayOffset = 0; dayOffset < 7; dayOffset++) {
+      final date = DateTime(now.year, now.month, now.day + dayOffset);
+      final times = PrayerTimes(coordinates: coordinates, date: date, calculationParameters: CalculationMethodParameters.jafari());
+      final moments = <DateTime?>[times.fajr, times.dhuhr, times.asr, times.maghrib, times.isha];
+      for (var i = 0; i < moments.length; i++) {
+        final moment = moments[i];
+        if (moment == null || !moment.isAfter(now)) continue;
+        final when = tz.TZDateTime.from(moment, tz.local);
+        await plugin.zonedSchedule(
+          dayOffset * 10 + i,
+          'حان وقت صلاة ${names[i]}',
+          'ميثاق المؤمن • ${city}',
+          when,
+          NotificationDetails(android: AndroidNotificationDetails(
+            channelId, channelName,
+            channelDescription: 'تنبيهات مواقيت الصلاة المحسوبة محلياً',
+            importance: Importance.max,
+            priority: Priority.high,
+            playSound: sound,
+            sound: sound ? const RawResourceAndroidNotificationSound('adhan_notice') : null,
+          )),
+          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        );
+      }
+    }
+  }
+}
+
+class PrayerAlertsPage extends StatefulWidget {
+  const PrayerAlertsPage({super.key});
+  @override State<PrayerAlertsPage> createState() => _PrayerAlertsPageState();
+}
+class _PrayerAlertsPageState extends State<PrayerAlertsPage> {
+  bool enabled = false;
+  bool sound = true;
+  bool busy = false;
+  String message = 'التنبيهات غير مفعّلة';
+  Future<void> _toggle(bool value) async {
+    setState(() { busy = true; });
+    try {
+      if (!value) {
+        await PrayerNotificationService.cancelPrayerAlerts();
+        if (mounted) setState(() { enabled = false; message = 'تم إيقاف التنبيهات'; });
+      } else {
+        final allowed = await PrayerNotificationService.requestPermission();
+        if (!allowed) {
+          if (mounted) setState(() => message = 'فعّل إذن الإشعارات من إعدادات الهاتف ثم أعد المحاولة');
+        } else {
+          final prefs = await SharedPreferences.getInstance();
+          final city = prefs.getString('selected_city') ?? 'قلعة سكر';
+          final coords = _PrayerTimesPageState.cities[city] ?? const Coordinates(31.8632, 46.0732);
+          await PrayerNotificationService.schedulePrayerAlerts(city, coords, sound: sound);
+          if (mounted) setState(() { enabled = true; message = 'تم إعداد تنبيهات الصلاة للأيام السبعة القادمة'; });
+        }
+      }
+    } catch (e) {
+      if (mounted) setState(() => message = 'تعذر إعداد التنبيهات؛ تحقق من أذونات الهاتف');
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+  @override Widget build(BuildContext context) => ListView(padding: const EdgeInsets.all(20), children: [
+    const Icon(Icons.notifications_active_rounded, size: 62, color: accentGold),
+    const SizedBox(height: 14),
+    const Text('تنبيهات الصلاة', textAlign: TextAlign.center, style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
+    const SizedBox(height: 8),
+    const Text('تُحسب الأوقات بالطريقة الجعفرية للمدينة المحفوظة. أعد تفعيل التنبيهات بعد تغيير المدينة أو إذا تغيّر التوقيت.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white60, height: 1.6)),
+    const SizedBox(height: 22),
+    SwitchListTile(value: sound, onChanged: (v) => setState(() => sound = v), title: const Text('صوت تنبيه'), subtitle: const Text('صوت إشعار النظام؛ ملف الأذان الكامل يحتاج إضافته منفصلاً'), activeColor: accentGold),
+    const SizedBox(height: 12),
+    FilledButton.icon(onPressed: busy ? null : () => _toggle(!enabled), icon: Icon(enabled ? Icons.notifications_off : Icons.notifications_active), label: Text(busy ? 'جارٍ الإعداد...' : enabled ? 'إيقاف التنبيهات' : 'تفعيل تنبيهات الصلاة')),
+    const SizedBox(height: 14),
+    Text(message, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white70)),
+    const SizedBox(height: 10),
+    OutlinedButton(onPressed: () async { await PrayerNotificationService.plugin.show(999, 'تجربة التنبيه', 'إذا ظهر هذا الإشعار فالإذن يعمل على جهازك.', const NotificationDetails(android: AndroidNotificationDetails(PrayerNotificationService.channelId, PrayerNotificationService.channelName, importance: Importance.max, priority: Priority.high))); }, child: const Text('اختبار الإشعار')),
+  ]);
 }
