@@ -32,7 +32,14 @@ jobs:
       - name: Generate Android platform files if missing
         run: |
           if [ ! -d android ]; then
+            # flutter create also scaffolds a demo widget_test.dart that references
+            # MyApp. This repository uses MithaqApp and has its own focused tests.
+            had_widget_test=false
+            if [ -f test/widget_test.dart ]; then had_widget_test=true; fi
             flutter create --platforms=android --project-name mithaq_al_mumin --org com.mithaqalmumin .
+            if [ "$had_widget_test" = false ] && [ -f test/widget_test.dart ]; then
+              rm test/widget_test.dart
+            fi
           fi
 
       - name: Enable Android core library desugaring
