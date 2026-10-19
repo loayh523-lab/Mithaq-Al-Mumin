@@ -1705,7 +1705,7 @@ class _TextPrayerCard extends StatelessWidget {
     Text(title, style: const TextStyle(color: accentGold, fontSize: 18, fontWeight: FontWeight.bold)),
     const SizedBox(height: 4), Text(source, style: const TextStyle(color: Colors.white54, fontSize: 12)),
     const SizedBox(height: 12), SelectableText(body, style: const TextStyle(fontSize: 17, height: 1.9)),
-    const SizedBox(height: 8), const Text('المعروض هنا مقتطف؛ لا يُعرض على أنه النص الكامل.', style: TextStyle(color: Colors.white38, fontSize: 11)),
+    const SizedBox(height: 8), const Text('قد تختلف بعض الألفاظ أو الزيادات بين المصادر والنسخ؛ راجع المصدر المذكور للنص الكامل المعتمد.', style: TextStyle(color: Colors.white38, fontSize: 11, height: 1.5)),
     Align(alignment: Alignment.centerLeft, child: TextButton.icon(
       onPressed: () async {
         await Clipboard.setData(ClipboardData(text: '$title\n$source\n\n$body'));
@@ -1904,7 +1904,7 @@ class DailyDuasPage extends StatelessWidget {
           Row(children: [Expanded(child: Text('دعاء يوم ${days[i]['name']}', style: const TextStyle(color: accentGold, fontSize: 18, fontWeight: FontWeight.bold))), if (i == today) const Chip(label: Text('اليوم'))]),
           const SizedBox(height: 6), Text(days[i]['title']!, style: const TextStyle(fontWeight: FontWeight.w600)),
           const SizedBox(height: 10), Text(days[i]['text']!, style: const TextStyle(fontSize: 17, height: 1.9)),
-          Align(alignment: Alignment.centerLeft, child: IconButton(tooltip: 'نسخ الدعاء', onPressed: () => Clipboard.setData(ClipboardData(text: days[i]['text']!)), icon: const Icon(Icons.copy_rounded, color: accentGold))),
+          Align(alignment: Alignment.centerLeft, child: IconButton(tooltip: 'نسخ الدعاء', onPressed: () async { await Clipboard.setData(ClipboardData(text: 'دعاء يوم ${days[i]['name']}\\n${days[i]['title']}\\n\\n${days[i]['text']}')); if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم نسخ الدعاء'))); }, icon: const Icon(Icons.copy_rounded, color: accentGold))),
         ]))),
     ]);
   }
