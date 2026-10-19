@@ -1027,6 +1027,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   };
 
   String city = 'قلعة سكر';
+  Coordinates selectedCoordinates = cities['قلعة سكر']!;
 
   @override
   void initState() {
@@ -1037,13 +1038,30 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   Future<void> _loadCity() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString('selected_city');
+    final lat = prefs.getDouble('prayer_latitude');
+    final lon = prefs.getDouble('prayer_longitude');
     if (!mounted) return;
-    if (saved != null && cities.containsKey(saved)) setState(() => city = saved);
+    if (saved == 'موقعي الحالي' && lat != null && lon != null) {
+      setState(() {
+        city = 'موقعي الحالي';
+        selectedCoordinates = Coordinates(lat, lon);
+      });
+    } else if (saved != null && cities.containsKey(saved)) {
+      setState(() {
+        city = saved;
+        selectedCoordinates = cities[saved]!;
+      });
+    }
   }
 
   Future<void> _saveCity(String value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selected_city', value);
+    if (!mounted) return;
+    setState(() {
+      city = value;
+      selectedCoordinates = cities[value]!;
+    });
   }
 
   String formatTime(DateTime value) {
@@ -1058,7 +1076,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   Widget build(BuildContext context) {
     final params = CalculationMethodParameters.jafari();
     final prayerTimes = PrayerTimes(
-      coordinates: cities[city]!,
+      coordinates: selectedCoordinates,
       date: DateTime.now(),
       calculationParameters: params,
     );
@@ -1104,12 +1122,12 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                     labelText: 'المدينة',
                     border: OutlineInputBorder(),
                   ),
-                  items: cities.keys.map((name) => DropdownMenuItem<String>(
+                  items: [...(city == 'موقعي الحالي' ? <String>['موقعي الحالي'] : <String>[]), ...cities.keys].map((name) => DropdownMenuItem<String>(
                     value: name,
                     child: Text(name),
                   )).toList(),
                   onChanged: (value) {
-                    if (value != null) { setState(() => city = value); _saveCity(value); }
+                    if (value != null) { _saveCity(value); }
                   },
                 ),
               ],
