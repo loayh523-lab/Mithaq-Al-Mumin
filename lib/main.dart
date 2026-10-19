@@ -45,6 +45,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int tab = 0;
   String homeCity = 'قلعة سكر';
+  Coordinates homeCoordinates = const Coordinates(31.8632, 46.0732);
   Timer? _clockTimer;
 
   static const homeCities = <String, Coordinates>{
@@ -74,9 +75,19 @@ class _HomePageState extends State<HomePage> {
   Future<void> _loadHomeCity() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString('selected_city');
+    final lat = prefs.getDouble('prayer_latitude');
+    final lon = prefs.getDouble('prayer_longitude');
     if (!mounted) return;
-    if (saved != null && homeCities.containsKey(saved)) {
-      setState(() => homeCity = saved);
+    if (saved == 'موقعي الحالي' && lat != null && lon != null) {
+      setState(() {
+        homeCity = 'موقعي الحالي';
+        homeCoordinates = Coordinates(lat, lon);
+      });
+    } else if (saved != null && homeCities.containsKey(saved)) {
+      setState(() {
+        homeCity = saved;
+        homeCoordinates = homeCities[saved]!;
+      });
     }
   }
 
@@ -100,7 +111,7 @@ class _HomePageState extends State<HomePage> {
   Widget home() {
     final now = DateTime.now();
     final calculated = PrayerTimes(
-      coordinates: homeCities[homeCity]!,
+      coordinates: homeCoordinates,
       date: now,
       calculationParameters: CalculationMethodParameters.jafari(),
     );
