@@ -38,14 +38,17 @@ void main() {
       expect(next.isPrayer, isTrue);
     });
 
-    test('falls back to Fajr when all prayer times have passed', () {
+    test('selects tomorrow Fajr after all of today’s prayer times have passed', () {
       final schedule = PrayerSchedule.forDate(
         coordinates: coordinates,
         date: DateTime(2026, 10, 20),
       );
       final afterIsha = schedule.entries.last.time.add(const Duration(hours: 1));
 
-      expect(schedule.nextPrayer(now: afterIsha).name, 'الفجر');
+      final next = schedule.nextPrayer(now: afterIsha);
+
+      expect(next.name, 'الفجر');
+      expect(next.time.isAfter(afterIsha), isTrue);
     });
   });
 }
