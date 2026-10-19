@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adhan_dart/adhan_dart.dart';
 import 'package:flutter_compass/flutter_compass.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const MithaqApp());
@@ -43,7 +44,10 @@ class HomePage extends StatelessWidget {
       ['التقويم الهجري', 'التاريخ الهجري التقريبي', Icons.calendar_month, 'hijri'],
     ];
     return Scaffold(
-      appBar: AppBar(title: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      appBar: AppBar(leadingWidth: 62, leading: Padding(
+        padding: const EdgeInsetsDirectional.only(start: 12, top: 7, bottom: 7),
+        child: SvgPicture.asset('assets/logo.svg', fit: BoxFit.contain),
+      ), title: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text('ميثاق المؤمن', style: TextStyle(fontWeight: FontWeight.bold)),
         Text('رفيقك في العبادة والمعرفة', style: TextStyle(fontSize: 12, color: accentGold)),
       ])),
@@ -53,8 +57,8 @@ class HomePage extends StatelessWidget {
             borderRadius: BorderRadius.circular(24),
             gradient: const LinearGradient(colors: [Color(0xFF17483A), Color(0xFF0D2B24)]),
             border: Border.all(color: accentGold.withValues(alpha: .35))),
-          child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Icon(Icons.nights_stay, color: accentGold, size: 34),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(width: 76, height: 76, child: SvgPicture.asset('assets/logo.svg')),
             SizedBox(height: 16),
             Text('السلام عليكم ورحمة الله', style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
