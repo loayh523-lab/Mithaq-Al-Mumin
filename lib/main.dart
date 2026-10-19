@@ -34,9 +34,9 @@ class HomePage extends StatelessWidget {
       ['الأدعية والأذكار', 'تسبيح واستغفار وصلاة', Icons.volunteer_activism, 'adhkar'],
       ['الزيارات', 'الزيارات الكاملة ومصادرها', Icons.mosque, 'ziyarat'],
       ['اتجاه القبلة', 'حساب اتجاه القبلة', Icons.explore, 'qibla'],
-      ['المكتبة الإسلامية', 'كتب ومصادر موثوقة', Icons.local_library, 'later'],
+      ['المكتبة الإسلامية', 'مصادر وكتب موثوقة', Icons.local_library, 'library'],
       ['المسبحة الإلكترونية', 'تسبيح مع عدّاد', Icons.circle_outlined, 'tasbih'],
-      ['المسائل الشرعية', 'أحكام ومصادرها', Icons.gavel, 'later'],
+      ['المسائل الشرعية', 'مواقع المراجع للاستفتاء', Icons.gavel, 'fiqh'],
     ];
     return Scaffold(
       appBar: AppBar(title: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -80,6 +80,10 @@ class HomePage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const PrayerTimesPage()));
                 } else if (f[3] == 'qibla') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const QiblaPage()));
+                } else if (f[3] == 'library') {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const IslamicLibraryPage()));
+                } else if (f[3] == 'fiqh') {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const FiqhSourcesPage()));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('قسم ' + (f[0] as String) + ' قيد التطوير')));
                 }
@@ -736,4 +740,91 @@ class _QiblaPageState extends State<QiblaPage> {
       ),
     );
   }
+}
+
+
+class IslamicLibraryPage extends StatelessWidget {
+  const IslamicLibraryPage({super.key});
+
+  static const resources = <Map<String, String>>[
+    {'title': 'نص القرآن الكريم', 'description': 'مصدر نص المصحف بالرسم العثماني وشروط النسخ والإسناد.', 'url': 'https://tanzil.net/docs/Text_License', 'source': 'مشروع تنزيل Tanzil'},
+    {'title': 'مفاتيح الجنان', 'description': 'نسخة رقمية من كتاب الشيخ عباس القمي للأدعية والزيارات.', 'url': 'https://lib.rafed.net/view.php?b_id=1731&type=c_fbook', 'source': 'مكتبة رافد'},
+    {'title': 'زيارة وارث', 'description': 'نص الزيارة مع ترقيم الفقرات للمراجعة والمقابلة.', 'url': 'https://supplications.al-islam.org/ziaraat/ziarat-warith.php?m=print&t=ar_en', 'source': 'Al-Islam.org'},
+    {'title': 'دعاء كميل', 'description': 'النص الكامل للدعاء مع معلومات المصدر.', 'url': 'https://al-islam.org/it/commentary-kumayl-supplication-husayn-ansariyan/complete-text-dua-kumayl-arabic-trasliteration-and', 'source': 'Al-Islam.org'},
+  ];
+
+  Future<void> _open(BuildContext context, String url) async {
+    final ok = await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    if (!ok && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تعذر فتح المصدر')));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('المكتبة الإسلامية')),
+    body: ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const Text('مصادر للمراجعة والتحقق', style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        const Text('هذه روابط لمصادر خارجية وليست كتباً مخزونة داخل التطبيق. النصوص الدينية التي سنضيفها دون إنترنت يجب أن تُراجع وتُقابل مع مصدر موثوق.',
+          style: TextStyle(color: Colors.white60, height: 1.6)),
+        const SizedBox(height: 12),
+        ...resources.map((item) => Card(
+          color: panelGreen,
+          child: ListTile(
+            leading: const Icon(Icons.menu_book, color: accentGold),
+            title: Text(item['title']!),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(item['description']! + '\nالمصدر: ' + item['source']!, style: const TextStyle(height: 1.5)),
+            ),
+            isThreeLine: true,
+            trailing: const Icon(Icons.open_in_new, color: accentGold),
+            onTap: () => _open(context, item['url']!),
+          ),
+        )),
+      ],
+    ),
+  );
+}
+
+class FiqhSourcesPage extends StatelessWidget {
+  const FiqhSourcesPage({super.key});
+
+  static const sources = <Map<String, String>>[
+    {'title': 'الموقع الرسمي لمكتب السيد علي الخامنئي', 'description': 'للوصول إلى الاستفتاءات والأحكام المنشورة رسمياً.', 'url': 'https://www.leader.ir/ar'},
+    {'title': 'مكتب السيد علي السيستاني', 'description': 'مصدر إضافي للمسائل الشرعية والفتاوى المنشورة.', 'url': 'https://www.sistani.org/arabic/'},
+  ];
+
+  Future<void> _open(BuildContext context, String url) async {
+    final ok = await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    if (!ok && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تعذر فتح الموقع')));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('المسائل الشرعية')),
+    body: ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const Text('ارجع إلى فتوى مرجع تقليدك في الحكم العملي، فقد تختلف الفتاوى بين المراجع.',
+          style: TextStyle(color: accentGold, height: 1.7)),
+        const SizedBox(height: 12),
+        ...sources.map((item) => Card(
+          color: panelGreen,
+          child: ListTile(
+            leading: const Icon(Icons.verified_user_outlined, color: accentGold),
+            title: Text(item['title']!),
+            subtitle: Text(item['description']!),
+            trailing: const Icon(Icons.open_in_new, color: accentGold),
+            onTap: () => _open(context, item['url']!),
+          ),
+        )),
+      ],
+    ),
+  );
 }
