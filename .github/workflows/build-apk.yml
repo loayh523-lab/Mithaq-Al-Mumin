@@ -2,8 +2,10 @@ name: Build Android APK
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'rebuild/**']
   workflow_dispatch:
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read
@@ -30,7 +32,14 @@ jobs:
       - name: Generate Android platform files if missing
         run: |
           if [ ! -d android ]; then
+            # flutter create also scaffolds a demo widget_test.dart that references
+            # MyApp. This repository uses MithaqApp and has its own focused tests.
+            had_widget_test=false
+            if [ -f test/widget_test.dart ]; then had_widget_test=true; fi
             flutter create --platforms=android --project-name mithaq_al_mumin --org com.mithaqalmumin .
+            if [ "$had_widget_test" = false ] && [ -f test/widget_test.dart ]; then
+              rm test/widget_test.dart
+            fi
           fi
 
       - name: Enable Android core library desugaring
@@ -61,8 +70,10 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import re
           p = Path('android/app/src/main/AndroidManifest.xml')
           s = p.read_text()
+          s, label_count = re.subn(r'(<application\b[^>]*\bandroid:label=")[^"]+(")', r'\1ميثاق المؤمن\2', s, count=1)
           permissions = [
               '  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>',
               '  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>',
@@ -75,7 +86,9 @@ jobs:
           missing = [x for x in permissions if x.split('"')[1] not in s]
           if missing:
               s = s.replace(marker, '\n'.join(missing) + '\n' + marker, 1)
+          if label_count or missing:
               p.write_text(s)
+
           PY
 
       - name: Download verified Uthmani Quran data
@@ -101,12 +114,16 @@ jobs:
       - name: Analyze Dart code
         run: flutter analyze lib --no-fatal-infos --no-fatal-warnings
 
+      - name: Run Flutter tests
+        run: flutter test
+
       - name: Generate launcher icon from official logo
         run: |
           sudo apt-get update
           sudo apt-get install -y librsvg2-bin
           rsvg-convert -w 512 -h 512 assets/logo.svg -o assets/logo.png
           dart run flutter_launcher_icons
+          dart run flutter_native_splash:create
 
       - name: Build release APK
         run: flutter build apk --release

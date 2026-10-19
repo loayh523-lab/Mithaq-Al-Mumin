@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'app/app_theme.dart';
+import 'features/prayer_times/domain/prayer_schedule.dart';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,15 +16,17 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
+// Compatibility aliases retained while legacy screens are migrated.
+const deepGreen = AppPalette.deepGreen;
+const panelGreen = AppPalette.panelGreen;
+const accentGold = AppPalette.accentGold;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrayerNotificationService.initialize();
   runApp(const MithaqApp());
 }
 
-const deepGreen = Color(0xFF061A15);
-const panelGreen = Color(0xFF12382E);
-const accentGold = Color(0xFFCEB577);
 
 class MithaqApp extends StatelessWidget {
   const MithaqApp({super.key});
@@ -29,9 +34,7 @@ class MithaqApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'ميثاق المؤمن',
-    theme: ThemeData(useMaterial3: true, brightness: Brightness.dark,
-      scaffoldBackgroundColor: deepGreen,
-      colorScheme: ColorScheme.fromSeed(seedColor: accentGold, brightness: Brightness.dark)),
+    theme: AppTheme.dark,
     home: const Directionality(textDirection: TextDirection.rtl, child: HomePage()),
   );
 }
@@ -110,24 +113,26 @@ class _HomePageState extends State<HomePage> {
 
   Widget home() {
     final now = DateTime.now();
-    final calculated = PrayerTimes(
+    final schedule = PrayerSchedule.forDate(
       coordinates: homeCoordinates,
       date: now,
-      calculationParameters: CalculationMethodParameters.jafari(),
     );
-    final prayerRows = <List<Object>>[
-      ['الفجر', calculated.fajr, Icons.wb_twilight],
-      ['الشروق', calculated.sunrise, Icons.wb_sunny_outlined],
-      ['الظهر', calculated.dhuhr, Icons.wb_sunny],
-      ['العصر', calculated.asr, Icons.sunny],
-      ['المغرب', calculated.maghrib, Icons.nights_stay_outlined],
-      ['العشاء', calculated.isha, Icons.nights_stay],
-    ];
-    final upcoming = prayerRows
-        .where((row) => row[0] != 'الشروق' && (row[1] as DateTime).isAfter(now))
+    final nextPrayer = schedule.nextPrayer(now: now);
+    final prayerIcons = <String, IconData>{
+      'الفجر': Icons.wb_twilight,
+      'الشروق': Icons.wb_sunny_outlined,
+      'الظهر': Icons.wb_sunny,
+      'العصر': Icons.sunny,
+      'المغرب': Icons.nights_stay_outlined,
+      'العشاء': Icons.nights_stay,
+    };
+    final prayers = schedule.entries
+        .map((entry) => <Object>[
+              entry.name,
+              entry.time,
+              prayerIcons[entry.name] ?? Icons.access_time,
+            ])
         .toList();
-    final nextPrayer = upcoming.isNotEmpty ? upcoming.first : prayerRows.first;
-    final prayers = prayerRows;
     return ListView(padding: const EdgeInsets.fromLTRB(16, 12, 16, 24), children: [
       glass(Row(children: [
         SizedBox(width: 54, height: 54, child: SvgPicture.asset('assets/logo.svg')),
@@ -161,7 +166,7 @@ class _HomePageState extends State<HomePage> {
           Icon(Icons.mosque_outlined, color: accentGold),
         ]),
         const SizedBox(height: 12),
-        Text('صلاة ${nextPrayer[0]} — ${_homeTime(nextPrayer[1] as DateTime)}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        Text('صلاة ${nextPrayer.name} — ${_homeTime(nextPrayer.time)}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         const SizedBox(height: 5),
         Text('المواقيت المحسوبة لمدينة $homeCity', style: const TextStyle(color: Colors.white60, fontSize: 13)),
         const SizedBox(height: 15),
@@ -1978,7 +1983,7 @@ class _PrayerAlertsPageState extends State<PrayerAlertsPage> {
           final savedLon = prefs.getDouble('prayer_longitude');
           final hasGps = city == 'موقعي الحالي' && savedLat != null && savedLon != null;
           final coords = hasGps
-              ? Coordinates(savedLat!, savedLon!)
+              ? Coordinates(savedLat, savedLon)
               : (_PrayerTimesPageState.cities[city] ?? const Coordinates(31.8632, 46.0732));
           await PrayerNotificationService.schedulePrayerAlerts(city, coords, sound: sound);
           if (mounted) setState(() { enabled = true; message = 'تم إعداد تنبيهات الصلاة للأيام السبعة القادمة'; });
@@ -2005,7 +2010,7 @@ class _PrayerAlertsPageState extends State<PrayerAlertsPage> {
     const SizedBox(height: 6),
     const Text('يحتاج إذن الموقع وتشغيل GPS. إذا لم تستخدمه، يعتمد التطبيق على المدينة المختارة.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white54, height: 1.5)),
     const SizedBox(height: 16),
-    SwitchListTile(value: sound, onChanged: (v) => setState(() => sound = v), title: const Text('صوت تنبيه'), subtitle: const Text('صوت إشعار النظام؛ ملف الأذان الكامل يحتاج إضافته منفصلاً'), activeColor: accentGold),
+    SwitchListTile(value: sound, onChanged: (v) => setState(() => sound = v), title: const Text('صوت تنبيه'), subtitle: const Text('صوت إشعار النظام؛ ملف الأذان الكامل يحتاج إضافته منفصلاً'), activeThumbColor: accentGold),
     const SizedBox(height: 12),
     FilledButton.icon(onPressed: busy ? null : () => _toggle(!enabled), icon: Icon(enabled ? Icons.notifications_off : Icons.notifications_active), label: Text(busy ? 'جارٍ الإعداد...' : enabled ? 'إيقاف التنبيهات' : 'تفعيل تنبيهات الصلاة')),
     const SizedBox(height: 14),
