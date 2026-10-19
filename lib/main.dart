@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adhan_dart/adhan_dart.dart';
-import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const MithaqApp());
@@ -39,6 +38,7 @@ class HomePage extends StatelessWidget {
       ['المكتبة الإسلامية', 'مصادر وكتب موثوقة', Icons.local_library, 'library'],
       ['المسبحة الإلكترونية', 'تسبيح مع عدّاد', Icons.circle_outlined, 'tasbih'],
       ['المسائل الشرعية', 'مواقع المراجع للاستفتاء', Icons.gavel, 'fiqh'],
+      ['التقويم الهجري', 'التاريخ الهجري التقريبي', Icons.calendar_month, 'hijri'],
     ];
     return Scaffold(
       appBar: AppBar(title: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -86,6 +86,8 @@ class HomePage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const IslamicLibraryPage()));
                 } else if (f[3] == 'fiqh') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const FiqhSourcesPage()));
+                } else if (f[3] == 'hijri') {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const HijriCalendarPage()));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('قسم ' + (f[0] as String) + ' قيد التطوير')));
                 }
@@ -796,7 +798,10 @@ class _QiblaPageState extends State<QiblaPage> {
                     child: Text(name),
                   )).toList(),
                   onChanged: (value) {
-                    if (value != null) setState(() => city = value);
+                    if (value != null) {
+                      setState(() => city = value);
+                      _saveCity(value);
+                    }
                   },
                 ),
               ],
@@ -934,4 +939,88 @@ class FiqhSourcesPage extends StatelessWidget {
       ],
     ),
   );
+}
+
+
+class HijriCalendarPage extends StatelessWidget {
+  const HijriCalendarPage({super.key});
+
+  // Tabular Islamic calendar approximation; actual month starts can differ by local moon sighting.
+  static DateTime _toHijri(DateTime date) {
+    final day = date.day;
+    final month = date.month;
+    final year = date.year;
+    final a = (14 - month) ~/ 12;
+    final y = year + 4800 - a;
+    final m = month + 12 * a - 3;
+    final jd = day + ((153 * m + 2) ~/ 5) + 365 * y + (y ~/ 4) - (y ~/ 100) + (y ~/ 400) - 32045;
+    final l = jd - 1948440 + 10632;
+    final n = (l - 1) ~/ 10631;
+    final ll = l - 10631 * n + 354;
+    final j = ((10985 - ll) ~/ 5316) * ((50 * ll) ~/ 17719) + (ll ~/ 5670) * ((43 * ll) ~/ 15238);
+    final ll2 = ll - ((30 - j) ~/ 15) * ((17719 * j) ~/ 50) - (j ~/ 16) * ((15238 * j) ~/ 43) + 29;
+    final hijriMonth = (24 * ll2) ~/ 709;
+    final hijriDay = ll2 - (709 * hijriMonth) ~/ 24;
+    final hijriYear = 30 * n + j - 30;
+    return DateTime(hijriYear, hijriMonth, hijriDay);
+  }
+
+  static const months = [
+    'محرم الحرام', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة',
+    'رجب', 'شعبان', 'رمضان المبارك', 'شوال', 'ذو القعدة', 'ذو الحجة'
+  ];
+  static const weekdays = ['الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد'];
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final hijri = _toHijri(now);
+    final monthName = hijri.month >= 1 && hijri.month <= 12 ? months[hijri.month - 1] : 'غير معروف';
+    final weekday = weekdays[now.weekday - 1];
+    return Scaffold(
+      appBar: AppBar(title: const Text('التقويم الهجري')),
+      body: ListView(
+        padding: const EdgeInsets.all(18),
+        children: [
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: const LinearGradient(colors: [Color(0xFF17483A), Color(0xFF0D2B24)]),
+              border: Border.all(color: accentGold.withValues(alpha: .4)),
+            ),
+            child: Column(children: [
+              const Icon(Icons.calendar_month, color: accentGold, size: 42),
+              const SizedBox(height: 16),
+              const Text('التاريخ الهجري التقريبي', style: TextStyle(color: Colors.white70)),
+              const SizedBox(height: 10),
+              Text('${hijri.day} $monthName ${hijri.year} هـ',
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: accentGold)),
+              const SizedBox(height: 8),
+              Text('$weekday — ${now.day}/${now.month}/${now.year} م',
+                style: const TextStyle(color: Colors.white70)),
+            ]),
+          ),
+          const SizedBox(height: 18),
+          const Card(
+            color: panelGreen,
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                'تنبيه: هذا تحويل حسابي تقريبي وليس تقويماً شرعياً معتمداً لبداية الأشهر. قد يختلف التاريخ يوماً أو أكثر بحسب ثبوت الهلال وإعلان الجهة الدينية المعتمدة في بلدك. للمناسبات والأحكام الشرعية اعتمد الإعلان المحلي الموثوق.',
+                style: TextStyle(height: 1.8, color: Colors.white70),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          OutlinedButton.icon(
+            onPressed: () => launchUrl(Uri.parse('https://www.leader.ir/ar'), mode: LaunchMode.externalApplication),
+            icon: const Icon(Icons.open_in_new),
+            label: const Text('متابعة الإعلانات الشرعية من الموقع الرسمي'),
+          ),
+        ],
+      ),
+    );
+  }
 }
