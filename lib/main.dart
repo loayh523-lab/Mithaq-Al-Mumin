@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const MithaqApp());
@@ -340,7 +341,15 @@ class ZiyaratPage extends StatelessWidget {
               child: Text(entry['subtitle']!, style: const TextStyle(color: Colors.white60, height: 1.4)),
             ),
             trailing: const Icon(Icons.open_in_new, color: accentGold, size: 20),
-            onTap: () => _open(context, entry['url']!),
+            onTap: () {
+              if (entry['title'] == 'زيارة الأربعين') {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (_) => const ZiyaratTextPage(),
+                ));
+              } else {
+                _open(context, entry['url']!);
+              }
+            },
           ),
         )),
         const SizedBox(height: 8),
@@ -348,6 +357,107 @@ class ZiyaratPage extends StatelessWidget {
           onPressed: () => _open(context, sourceBook),
           icon: const Icon(Icons.library_books),
           label: const Text('فتح كتاب مفاتيح الجنان كاملاً'),
+        ),
+      ],
+    ),
+  );
+}
+
+
+class ZiyaratTextPage extends StatefulWidget {
+  const ZiyaratTextPage({super.key});
+
+  @override
+  State<ZiyaratTextPage> createState() => _ZiyaratTextPageState();
+}
+
+class _ZiyaratTextPageState extends State<ZiyaratTextPage> {
+  double fontSize = 23;
+
+  static const text = '''
+السَّلامُ عَلى وَلِيِّ اللهِ وَحَبِيبِهِ، السَّلامُ عَلى خَلِيلِ اللهِ وَنَجِيبِهِ، السَّلامُ عَلى صَفِيِّ اللهِ وَابْنِ صَفِيِّهِ، السَّلامُ عَلى الحُسَيْنِ المَظْلُومِ الشَّهِيدِ، السَّلامُ عَلى أَسِيرِ الكُرُباتِ وَقَتِيلِ العَبَراتِ.
+
+اللّهُمَّ إِنِّي أَشْهَدُ أَنَّهُ وَلِيُّكَ وَصَفِيُّكَ وَابْنُ صَفِيِّكَ الفائِزُ بِكَرامَتِكَ، أَكْرَمْتَهُ بِالشَّهادَةِ وَحَبَوْتَهُ بِالسَّعادَةِ وَاجْتَبَيْتَهُ بِطِيبِ الوِلادَةِ وَجَعَلْتَهُ سَيِّداً مِنَ السّادَةِ وَقائِداً مِنَ القادَةِ وَذائِداً مِنَ الذّادَةِ وَأَعْطَيْتَهُ مَوارِيثَ الأَنْبِياءِ وَجَعَلْتَهُ حُجَّةً عَلى خَلْقِكَ مِنَ الأَوْصِياءِ، فَأَعْذَرَ فِي الدُّعاءِ وَمَنَحَ النُّصْحَ وَبَذَلَ مُهْجَتَهُ فِيكَ لِيَسْتَنْقِذَ عِبادَكَ مِنَ الجَهالَةِ وَحَيْرَةِ الضَّلالَةِ، وَقَدْ تَوازَرَ عَلَيْهِ مَنْ غَرَّتْهُ الدُّنْيا وَباعَ حَظَّهُ بِالأَرْذَلِ الأَدْنى وَشَرى آخِرَتَهُ بِالثَّمَنِ الأَوْكَسِ وَتَغَطْرَسَ وَتَرَدّى فِي هَواهُ وَأَسْخَطَكَ وَأَسْخَطَ نَبِيَّكَ وَأَطاعَ مِنْ عِبادِكَ أَهْلَ الشِّقاقِ وَالنِّفاقِ وَحَمَلَةَ الأَوْزارِ المُسْتَوْجِبِينَ النّارَ، فَجاهَدَهُمْ فِيكَ صابِراً مُحْتَسِباً حَتّى سُفِكَ فِي طاعَتِكَ دَمُهُ وَاسْتُبِيحَ حَرِيمُهُ.
+
+اللّهُمَّ فَالْعَنْهُمْ لَعْناً وَبِيلاً وَعَذِّبْهُمْ عَذاباً أَلِيماً. السَّلامُ عَلَيْكَ يا ابْنَ رَسُولِ اللهِ، السَّلامُ عَلَيْكَ يا ابْنَ سَيِّدِ الأَوْصِياءِ، أَشْهَدُ أَنَّكَ أَمِينُ اللهِ وَابْنُ أَمِينِهِ، عِشْتَ سَعِيداً وَمَضَيْتَ حَمِيداً وَمُتَّ فَقِيداً مَظْلُوماً شَهِيداً، وَأَشْهَدُ أَنَّ اللهَ مُنْجِزٌ ما وَعَدَكَ وَمُهْلِكٌ مَنْ خَذَلَكَ وَمُعَذِّبٌ مَنْ قَتَلَكَ، وَأَشْهَدُ أَنَّكَ وَفَيْتَ بِعَهْدِ اللهِ وَجاهَدْتَ فِي سَبِيلِهِ حَتّى أَتاكَ اليَقِينُ، فَلَعَنَ اللهُ مَنْ قَتَلَكَ وَلَعَنَ اللهُ مَنْ ظَلَمَكَ وَلَعَنَ اللهُ أُمَّةً سَمِعَتْ بِذلِكَ فَرَضِيَتْ بِهِ.
+
+اللّهُمَّ إِنِّي أُشْهِدُكَ أَنِّي وَلِيٌّ لِمَنْ والاهُ وَعَدُوٌّ لِمَنْ عاداهُ. بِأَبِي أَنْتَ وَأُمِّي يا ابْنَ رَسُولِ اللهِ، أَشْهَدُ أَنَّكَ كُنْتَ نُوراً فِي الأَصْلابِ الشّامِخَةِ وَالأَرْحامِ المُطَهَّرَةِ، لَمْ تُنَجِّسْكَ الجاهِلِيَّةُ بِأَنْجاسِها وَلَمْ تُلْبِسْكَ المُدْلَهِمّاتُ مِنْ ثِيابِها، وَأَشْهَدُ أَنَّكَ مِنْ دَعائِمِ الدِّينِ وَأَرْكانِ المُسْلِمِينَ وَمَعْقِلِ المُؤْمِنِينَ، وَأَشْهَدُ أَنَّكَ الإِمامُ البَرُّ التَّقِيُّ الرَّضِيُّ الزَّكِيُّ الهادِي المَهْدِيُّ، وَأَشْهَدُ أَنَّ الأَئِمَّةَ مِنْ وُلْدِكَ كَلِمَةُ التَّقْوى وَأَعْلامُ الهُدى وَالعُرْوَةُ الوُثْقى وَالحُجَّةُ عَلى أَهْلِ الدُّنْيا.
+
+وَأَشْهَدُ أَنِّي بِكُمْ مُؤْمِنٌ وَبِإِيابِكُمْ مُوقِنٌ بِشَرائِعِ دِينِي وَخَواتِيمِ عَمَلِي، وَقَلْبِي لِقَلْبِكُمْ سِلْمٌ وَأَمْرِي لِأَمْرِكُمْ مُتَّبِعٌ وَنُصْرَتِي لَكُمْ مُعَدَّةٌ حَتّى يَأْذَنَ اللهُ لَكُمْ، فَمَعَكُمْ مَعَكُمْ لا مَعَ عَدُوِّكُمْ، صَلَواتُ اللهِ عَلَيْكُمْ وَعَلى أَرْواحِكُمْ وَأَجْسادِكُمْ وَشاهِدِكُمْ وَغائِبِكُمْ وَظاهِرِكُمْ وَباطِنِكُمْ، آمِينَ رَبَّ العالَمِينَ.
+''';
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(
+      title: const Text('زيارة الأربعين'),
+      actions: [
+        IconButton(
+          tooltip: 'نسخ النص',
+          onPressed: () async {
+            await Clipboard.setData(const ClipboardData(text: text));
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('تم نسخ نص الزيارة')),
+              );
+            }
+          },
+          icon: const Icon(Icons.copy),
+        ),
+      ],
+    ),
+    body: ListView(
+      padding: const EdgeInsets.all(18),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: panelGreen,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: accentGold.withValues(alpha: .3)),
+          ),
+          child: const Column(
+            children: [
+              Icon(Icons.menu_book, color: accentGold, size: 30),
+              SizedBox(height: 8),
+              Text('زيارة الأربعين', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              SizedBox(height: 6),
+              Text('من الزيارات الواردة في مفاتيح الجنان', style: TextStyle(color: Colors.white60)),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            const Text('حجم الخط'),
+            Expanded(
+              child: Slider(
+                value: fontSize,
+                min: 18,
+                max: 34,
+                divisions: 8,
+                activeColor: accentGold,
+                label: fontSize.round().toString(),
+                onChanged: (v) => setState(() => fontSize = v),
+              ),
+            ),
+          ],
+        ),
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: panelGreen.withValues(alpha: .55),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: SelectableText(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: fontSize, height: 2.05, color: Colors.white),
+          ),
+        ),
+        const SizedBox(height: 14),
+        const Text(
+          'المصدر: مفاتيح الجنان، الشيخ عباس القمي، باب زيارة الإمام الحسين عليه السلام وزيارة الأربعين. راجع النص مع النسخة المعتمدة قبل الطباعة أو النشر.',
+          style: TextStyle(color: Colors.white54, height: 1.6, fontSize: 12),
         ),
       ],
     ),
