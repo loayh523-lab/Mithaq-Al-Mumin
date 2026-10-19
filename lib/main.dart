@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:adhan_dart/adhan_dart.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +32,7 @@ class HomePage extends StatelessWidget {
       ['مواقيت الصلاة', 'حساب أوقات الصلاة', Icons.access_time, 'prayer'],
       ['الأدعية والأذكار', 'تسبيح واستغفار وصلاة', Icons.volunteer_activism, 'adhkar'],
       ['الزيارات', 'الزيارات الكاملة ومصادرها', Icons.mosque, 'ziyarat'],
-      ['اتجاه القبلة', 'تحديد اتجاه القبلة', Icons.explore, 'later'],
+      ['اتجاه القبلة', 'حساب اتجاه القبلة', Icons.explore, 'qibla'],
       ['المكتبة الإسلامية', 'كتب ومصادر موثوقة', Icons.local_library, 'later'],
       ['المسبحة الإلكترونية', 'تسبيح مع عدّاد', Icons.circle_outlined, 'tasbih'],
       ['المسائل الشرعية', 'أحكام ومصادرها', Icons.gavel, 'later'],
@@ -76,6 +77,8 @@ class HomePage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const ZiyaratPage()));
                 } else if (f[3] == 'prayer') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const PrayerTimesPage()));
+                } else if (f[3] == 'qibla') {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const QiblaPage()));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('قسم ' + (f[0] as String) + ' قيد التطوير')));
                 }
@@ -573,6 +576,112 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           const Text(
             'طريقة الحساب: الجعفري (تقريب فلكي). قد تختلف الأوقات عن الجداول المحلية أو توقيت الإمساك والأذان المعتمد؛ راجع المصدر الديني المحلي واضبط المدينة الصحيحة. هذه النسخة تعرض الأوقات فقط ولا ترسل أذاناً أو إشعارات بعد.',
             style: TextStyle(color: Colors.white54, height: 1.6, fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class QiblaPage extends StatefulWidget {
+  const QiblaPage({super.key});
+
+  @override
+  State<QiblaPage> createState() => _QiblaPageState();
+}
+
+class _QiblaPageState extends State<QiblaPage> {
+  String city = 'قلعة سكر';
+
+  double bearing(Coordinates coordinates) {
+    const kaabaLat = 21.4225;
+    const kaabaLon = 39.8262;
+    final lat1 = coordinates.latitude * math.pi / 180;
+    final lat2 = kaabaLat * math.pi / 180;
+    final deltaLon = (kaabaLon - coordinates.longitude) * math.pi / 180;
+    final y = math.sin(deltaLon);
+    final x = math.cos(lat1) * math.tan(lat2) - math.sin(lat1) * math.cos(deltaLon);
+    final degrees = math.atan2(y, x) * 180 / math.pi;
+    return (degrees + 360) % 360;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final angle = bearing(_PrayerTimesPageState.cities[city]!);
+    return Scaffold(
+      appBar: AppBar(title: const Text('اتجاه القبلة')),
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: panelGreen,
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: accentGold.withValues(alpha: .3)),
+            ),
+            child: Column(
+              children: [
+                const Icon(Icons.explore, color: accentGold, size: 34),
+                const SizedBox(height: 10),
+                const Text('اتجاه الكعبة المشرفة', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 18),
+                DropdownButtonFormField<String>(
+                  value: city,
+                  dropdownColor: panelGreen,
+                  decoration: const InputDecoration(labelText: 'المدينة', border: OutlineInputBorder()),
+                  items: _PrayerTimesPageState.cities.keys.map((name) => DropdownMenuItem<String>(
+                    value: name,
+                    child: Text(name),
+                  )).toList(),
+                  onChanged: (value) {
+                    if (value != null) setState(() => city = value);
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 22),
+          Center(
+            child: SizedBox(
+              width: 250,
+              height: 250,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: 230,
+                    height: 230,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: accentGold, width: 2),
+                      color: panelGreen.withValues(alpha: .55),
+                    ),
+                  ),
+                  const Positioned(top: 17, child: Text('شمال', style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold))),
+                  Transform.rotate(
+                    angle: angle * math.pi / 180,
+                    child: const Icon(Icons.navigation, color: accentGold, size: 92),
+                  ),
+                  const Positioned(bottom: 18, child: Text('جنوب', style: TextStyle(color: Colors.white54))),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 18),
+          Center(
+            child: Text(
+              '\${angle.toStringAsFixed(1)}° من الشمال باتجاه عقارب الساعة',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: accentGold, fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(height: 14),
+          const Text(
+            'هذا اتجاه محسوب من إحداثيات المدينة وليس بوصلة حية؛ السهم ثابت بالنسبة للشمال ولا يتبع دوران الهاتف. للحصول على توجيه أدق، اختر مدينتك الصحيحة واستخدم بوصلة الهاتف بعد معايرتها.',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white54, height: 1.7, fontSize: 12),
           ),
         ],
       ),
