@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
       ['القرآن الكريم', 'قراءة سور مختارة', Icons.menu_book, 'quran'],
       ['مواقيت الصلاة', 'حساب أوقات الصلاة', Icons.access_time, 'prayer'],
       ['الأدعية والأذكار', 'تسبيح واستغفار وصلاة', Icons.volunteer_activism, 'adhkar'],
+      ['تسبيح الزهراء عليها السلام', '34 تكبيراً و33 تحميداً و33 تسبيحاً', Icons.auto_awesome, 'fatima_tasbih'],
       ['الزيارات', 'الزيارات الكاملة ومصادرها', Icons.mosque, 'ziyarat'],
       ['اتجاه القبلة', 'حساب اتجاه القبلة', Icons.explore, 'qibla'],
       ['المكتبة الإسلامية', 'مصادر وكتب موثوقة', Icons.local_library, 'library'],
@@ -77,6 +78,8 @@ class HomePage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const TasbihPage()));
                 } else if (f[3] == 'adhkar') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const AdhkarPage()));
+                } else if (f[3] == 'fatima_tasbih') {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const FatimaTasbihPage()));
                 } else if (f[3] == 'ziyarat') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const ZiyaratPage()));
                 } else if (f[3] == 'prayer') {
@@ -232,8 +235,18 @@ class SurahPage extends StatelessWidget {
         ),
       Container(padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(color: panelGreen, borderRadius: BorderRadius.circular(22), border: Border.all(color: accentGold.withValues(alpha: .25))),
-        child: Text(surah.verses.asMap().entries.map((e) => e.value + '  ﴿' + (e.key + 1).toString() + '﴾').join('\n\n'),
-          textAlign: TextAlign.center, style: const TextStyle(fontSize: 25, height: 2.1))),
+        child: Column(children: [
+          for (var i = 0; i < surah.verses.length; i++)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 7),
+              child: Text(
+                '${surah.verses[i]}  ﴿${i + 1}﴾',
+                textAlign: TextAlign.center,
+                textDirection: TextDirection.rtl,
+                style: const TextStyle(fontSize: 25, height: 2.0),
+              ),
+            ),
+        ])),
       const SizedBox(height: 16),
       const Text('النص العثماني: مشروع تنزيل Tanzil. أُبقي النص كما ورد في المصدر؛ قد تختلف علامات العرض عن مصحفك المطبوع.',
         style: TextStyle(color: Colors.white54, fontSize: 12, height: 1.5)),
@@ -336,6 +349,150 @@ class _AdhkarPageState extends State<AdhkarPage> {
               icon: const Icon(Icons.restart_alt), label: const Text('تصفير العدّاد'),
             ),
             const SizedBox(height: 12),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FatimaTasbihPage extends StatefulWidget {
+  const FatimaTasbihPage({super.key});
+
+  @override
+  State<FatimaTasbihPage> createState() => _FatimaTasbihPageState();
+}
+
+class _FatimaTasbihPageState extends State<FatimaTasbihPage> {
+  static const phrases = <Map<String, Object>>[
+    {'title': 'التكبير', 'text': 'اللَّهُ أَكْبَرُ', 'target': 34},
+    {'title': 'التحميد', 'text': 'الْحَمْدُ لِلَّهِ', 'target': 33},
+    {'title': 'التسبيح', 'text': 'سُبْحَانَ اللَّهِ', 'target': 33},
+  ];
+
+  int stage = 0;
+  int count = 0;
+  final List<int> counts = [0, 0, 0];
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      stage = (prefs.getInt('fatima_tasbih_stage') ?? 0).clamp(0, 2);
+      for (var i = 0; i < counts.length; i++) {
+        counts[i] = prefs.getInt('fatima_tasbih_$i') ?? 0;
+      }
+      count = counts[stage];
+    });
+  }
+
+  Future<void> _save() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('fatima_tasbih_stage', stage);
+    for (var i = 0; i < counts.length; i++) {
+      await prefs.setInt('fatima_tasbih_$i', counts[i]);
+    }
+  }
+
+  void _nextStage() {
+    setState(() {
+      stage = (stage + 1) % phrases.length;
+      count = counts[stage];
+    });
+    _save();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final phrase = phrases[stage];
+    final target = phrase['target'] as int;
+    final allDone = counts[0] >= 34 && counts[1] >= 33 && counts[2] >= 33;
+    return Scaffold(
+      appBar: AppBar(title: const Text('تسبيح الزهراء عليها السلام')),
+      body: Padding(
+        padding: const EdgeInsets.all(22),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text('التسبيح المشهور بعد الصلاة', textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white70, height: 1.6)),
+            const SizedBox(height: 18),
+            Row(
+              children: List.generate(phrases.length, (i) => Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 3),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: i == stage ? const Color(0xFF17483A) : panelGreen,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: i == stage ? accentGold : Colors.white12),
+                    ),
+                    child: Column(children: [
+                      Text(phrases[i]['title'] as String),
+                      const SizedBox(height: 4),
+                      Text('${counts[i]}/${phrases[i]['target']}',
+                        style: const TextStyle(color: accentGold, fontSize: 12)),
+                    ]),
+                  ),
+                ),
+              )),
+            ),
+            const Spacer(),
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(color: panelGreen, borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: accentGold.withValues(alpha: .3))),
+              child: Column(children: [
+                Text(phrase['title'] as String, style: const TextStyle(color: accentGold, fontSize: 18)),
+                const SizedBox(height: 18),
+                Text(phrase['text'] as String, textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 34, height: 1.8, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 18),
+                Text('$count', style: const TextStyle(fontSize: 60, color: accentGold, fontWeight: FontWeight.bold)),
+                Text('من $target', style: const TextStyle(color: Colors.white70)),
+                const SizedBox(height: 14),
+                LinearProgressIndicator(value: (count / target).clamp(0.0, 1.0),
+                  minHeight: 7, borderRadius: BorderRadius.circular(8),
+                  backgroundColor: Colors.white12, color: accentGold),
+              ]),
+            ),
+            const Spacer(),
+            SizedBox(height: 58, child: FilledButton.icon(
+              onPressed: () {
+                setState(() {
+                  if (count < target) count++;
+                  counts[stage] = count;
+                });
+                _save();
+              },
+              icon: const Icon(Icons.touch_app),
+              label: const Text('تسبيح', style: TextStyle(fontSize: 20)),
+              style: FilledButton.styleFrom(backgroundColor: accentGold, foregroundColor: deepGreen),
+            )),
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: _nextStage,
+              icon: const Icon(Icons.arrow_back),
+              label: Text(stage == 2 ? 'العودة إلى التكبير' : 'الذكر التالي'),
+            ),
+            TextButton.icon(
+              onPressed: () {
+                setState(() { counts[stage] = 0; count = 0; });
+                _save();
+              },
+              icon: const Icon(Icons.restart_alt),
+              label: const Text('تصفير الذكر الحالي'),
+            ),
+            if (allDone)
+              const Text('أكملت الأذكار الثلاثة. تقبّل الله طاعتك.',
+                textAlign: TextAlign.center, style: TextStyle(color: accentGold)),
           ],
         ),
       ),
