@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adhan_dart/adhan_dart.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const MithaqApp());
@@ -825,9 +826,16 @@ class _QiblaPageState extends State<QiblaPage> {
                     ),
                   ),
                   const Positioned(top: 17, child: Text('شمال', style: TextStyle(color: Colors.white70, fontWeight: FontWeight.bold))),
-                  Transform.rotate(
-                    angle: angle * math.pi / 180,
-                    child: const Icon(Icons.navigation, color: accentGold, size: 92),
+                  StreamBuilder<CompassEvent>(
+                    stream: FlutterCompass.events,
+                    builder: (context, snapshot) {
+                      final heading = snapshot.data?.heading;
+                      final rotation = heading == null ? angle : angle - heading;
+                      return Transform.rotate(
+                        angle: rotation * math.pi / 180,
+                        child: const Icon(Icons.navigation, color: accentGold, size: 92),
+                      );
+                    },
                   ),
                   const Positioned(bottom: 18, child: Text('جنوب', style: TextStyle(color: Colors.white54))),
                 ],
@@ -844,7 +852,7 @@ class _QiblaPageState extends State<QiblaPage> {
           ),
           const SizedBox(height: 14),
           const Text(
-            'هذا اتجاه محسوب من إحداثيات المدينة وليس بوصلة حية؛ السهم ثابت بالنسبة للشمال ولا يتبع دوران الهاتف. للحصول على توجيه أدق، اختر مدينتك الصحيحة واستخدم بوصلة الهاتف بعد معايرتها.',
+            'يتبع السهم حساس البوصلة في الهاتف إذا كان متاحاً. أبعد الهاتف عن المغناطيس والمعادن وحرّكه على شكل رقم 8 لمعايرة الحساس. إذا لم يظهر اتجاه الحساس، فسيعرض التطبيق الاتجاه المحسوب من الشمال فقط. اختر مدينتك الصحيحة.',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white54, height: 1.7, fontSize: 12),
           ),
