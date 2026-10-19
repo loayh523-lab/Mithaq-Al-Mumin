@@ -492,10 +492,13 @@ class _AdhkarPageState extends State<AdhkarPage> {
     {'title': 'الصلاة على محمد وآل محمد', 'text': 'اللهم صل على محمد وآل محمد', 'target': 100},
     {'title': 'الاستغفار', 'text': 'أستغفر الله ربي وأتوب إليه', 'target': 100},
     {'title': 'التسبيح', 'text': 'سبحان الله والحمد لله ولا إله إلا الله والله أكبر', 'target': 100},
+    {'title': 'ذكر يونُس عليه السلام', 'text': 'لا إله إلا أنت سبحانك إني كنت من الظالمين', 'target': 100},
+    {'title': 'الحوقلة', 'text': 'لا حول ولا قوة إلا بالله العلي العظيم', 'target': 100},
+    {'title': 'دعاء الفرج', 'text': 'اللهم كن لوليك الحجة بن الحسن صلواتك عليه وعلى آبائه', 'target': 100},
   ];
   int selected = 0;
   int count = 0;
-  final List<int> savedCounts = [0, 0, 0];
+  late final List<int> savedCounts = List<int>.filled(adhkar.length, 0);
 
   @override
   void initState() {
@@ -1437,6 +1440,8 @@ class ServicesHubPage extends StatelessWidget {
       _ServiceItem('عداد الركعات', 'سجّل الركعات التي أنجزتها', Icons.countertops_rounded, () => _open(context, const RakatsTrackerPage(), 'عداد الركعات')),
       _ServiceItem('التقويم الهجري', 'مع تنبيه اختلاف التقويم', Icons.calendar_month_rounded, () => _open(context, const HijriInfoPage(), 'التقويم الهجري')),
       _ServiceItem('دليل المناسبات', 'رمضان والأربعين والحج والزيارة', Icons.event_available_rounded, () => _open(context, const OccasionsPage(), 'دليل المناسبات')),
+      _ServiceItem('مكتبة الأدعية', 'أدعية مختارة مع نصوص للقراءة', Icons.volunteer_activism_rounded, () => _open(context, const DuaLibraryPage(), 'مكتبة الأدعية')),
+      _ServiceItem('مكتبة الزيارات', 'زيارة عاشوراء والزيارة الجامعة المختصرة', Icons.mosque_rounded, () => _open(context, const ZiyaratLibraryPage(), 'مكتبة الزيارات')),
     ];
     return ListView(padding: const EdgeInsets.all(16), children: [
       const Text('خدمات ميثاق المؤمن', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: accentGold)),
@@ -1535,5 +1540,42 @@ class _OccasionCard extends StatelessWidget {
   const _OccasionCard({required this.icon, required this.title, required this.body});
   @override Widget build(BuildContext context) => Card(color: panelGreen, margin: const EdgeInsets.only(bottom: 12), child: Padding(padding: const EdgeInsets.all(16), child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Icon(icon, color: accentGold, size: 28), const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)), const SizedBox(height: 6), Text(body, style: const TextStyle(color: Colors.white70, height: 1.5))]))
+  ])));
+}
+
+class DuaLibraryPage extends StatelessWidget {
+  const DuaLibraryPage({super.key});
+  @override Widget build(BuildContext context) => ListView(padding: const EdgeInsets.all(16), children: const [
+    Text('مكتبة الأدعية', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: accentGold)),
+    SizedBox(height: 8), Text('نصوص قصيرة للقراءة؛ تُضاف النصوص الكاملة مع توثيق مصدرها في التحديثات القادمة.', style: TextStyle(color: Colors.white60, height: 1.5)),
+    SizedBox(height: 14),
+    _TextPrayerCard(title: 'دعاء الفرج', source: 'دعاء متداول لطلب الفرج', body: 'اللهم كن لوليك الحجة بن الحسن، صلواتك عليه وعلى آبائه، في هذه الساعة وفي كل ساعة، ولياً وحافظاً وقائداً وناصراً ودليلاً وعيناً، حتى تسكنه أرضك طوعاً وتمتعه فيها طويلاً.'),
+    _TextPrayerCard(title: 'دعاء التوسل', source: 'مقتطف افتتاحي — ليس النص الكامل', body: 'اللهم إني أسألك وأتوجه إليك بنبيك نبي الرحمة محمد صلى الله عليه وآله.'),
+    _TextPrayerCard(title: 'دعاء العهد', source: 'مقتطف افتتاحي — ليس النص الكامل', body: 'اللهم رب النور العظيم، ورب الكرسي الرفيع، ورب البحر المسجور...'),
+    _TextPrayerCard(title: 'دعاء كميل', source: 'مقتطف افتتاحي — ليس النص الكامل', body: 'اللهم إني أسألك برحمتك التي وسعت كل شيء، وبقوتك التي قهرت بها كل شيء...'),
+    _TextPrayerCard(title: 'دعاء الندبة', source: 'مكتبة الأدعية', body: 'يمكن قراءة دعاء الندبة في أوقاته المأثورة؛ ستُضاف النسخة الكاملة بعد مراجعة النص والمصدر.'),
+  ]);
+}
+class ZiyaratLibraryPage extends StatelessWidget {
+  const ZiyaratLibraryPage({super.key});
+  @override Widget build(BuildContext context) => ListView(padding: const EdgeInsets.all(16), children: const [
+    Text('مكتبة الزيارات', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: accentGold)),
+    SizedBox(height: 8), Text('نحافظ على نصوص الزيارات كما وردت ولا نكمل النصوص من الذاكرة؛ هذه الصفحة فهرس أولي.', style: TextStyle(color: Colors.white60, height: 1.5)),
+    SizedBox(height: 14),
+    _TextPrayerCard(title: 'زيارة عاشوراء', source: 'زيارة الإمام الحسين عليه السلام', body: 'السلام عليك يا أبا عبد الله، السلام عليك يا ابن رسول الله، السلام عليك يا ابن أمير المؤمنين وابن سيد الوصيين...'),
+    _TextPrayerCard(title: 'زيارة وارث', source: 'زيارة الإمام الحسين عليه السلام', body: 'السلام عليك يا وارث آدم صفوة الله، السلام عليك يا وارث نوح نبي الله، السلام عليك يا وارث إبراهيم خليل الله...'),
+    _TextPrayerCard(title: 'زيارة أمين الله', source: 'زيارة الإمام علي عليه السلام', body: 'السلام عليك يا أمين الله في أرضه وحجته على عباده...'),
+    _TextPrayerCard(title: 'الزيارة الجامعة الكبيرة', source: 'زيارة جامعة لأئمة أهل البيت عليهم السلام', body: 'السلام عليكم يا أهل بيت النبوة، وموضع الرسالة، ومختلف الملائكة، ومهبط الوحي...'),
+    _TextPrayerCard(title: 'زيارة أبي الفضل العباس عليه السلام', source: 'زيارة أبي الفضل العباس عليه السلام', body: 'السلام عليك يا ابن أمير المؤمنين، السلام عليك أيها العبد الصالح المطيع لله ولرسوله ولأمير المؤمنين والحسن والحسين صلوات الله عليهم أجمعين...'),
+  ]);
+}
+class _TextPrayerCard extends StatelessWidget {
+  final String title, source, body;
+  const _TextPrayerCard({required this.title, required this.source, required this.body});
+  @override Widget build(BuildContext context) => Card(color: panelGreen, margin: const EdgeInsets.only(bottom: 12), child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    Text(title, style: const TextStyle(color: accentGold, fontSize: 18, fontWeight: FontWeight.bold)),
+    const SizedBox(height: 4), Text(source, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+    const SizedBox(height: 12), Text(body, style: const TextStyle(fontSize: 17, height: 1.9)),
+    const SizedBox(height: 8), const Text('المعروض مقتطف وليس بديلاً عن النص الكامل من مصدر موثوق.', style: TextStyle(color: Colors.white38, fontSize: 11)),
   ])));
 }
