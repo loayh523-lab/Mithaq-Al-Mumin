@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const MithaqApp());
 
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
       ['القرآن الكريم', 'قراءة سور مختارة', Icons.menu_book, 'quran'],
       ['مواقيت الصلاة', 'الأوقات والأذان', Icons.access_time, 'later'],
       ['الأدعية والأذكار', 'تسبيح واستغفار وصلاة', Icons.volunteer_activism, 'adhkar'],
-      ['الزيارات', 'نصوص الزيارات', Icons.mosque, 'later'],
+      ['الزيارات', 'الزيارات الكاملة ومصادرها', Icons.mosque, 'ziyarat'],
       ['اتجاه القبلة', 'تحديد اتجاه القبلة', Icons.explore, 'later'],
       ['المكتبة الإسلامية', 'كتب ومصادر موثوقة', Icons.local_library, 'later'],
       ['المسبحة الإلكترونية', 'تسبيح مع عدّاد', Icons.circle_outlined, 'tasbih'],
@@ -69,6 +70,8 @@ class HomePage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const TasbihPage()));
                 } else if (f[3] == 'adhkar') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const AdhkarPage()));
+                } else if (f[3] == 'ziyarat') {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const ZiyaratPage()));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('قسم ' + (f[0] as String) + ' قيد التطوير')));
                 }
@@ -263,5 +266,90 @@ class _TasbihPageState extends State<TasbihPage> {
       ]),
       const SizedBox(height: 18),
     ])),
+  );
+}
+
+
+class ZiyaratPage extends StatelessWidget {
+  const ZiyaratPage({super.key});
+
+  static const sourceBook = 'https://lib.rafed.net/view.php?b_id=1731&type=c_fbook';
+  static const entries = <Map<String, String>>[
+    {'title': 'زيارة الإمام الحسين عليه السلام — مفاتيح الجنان', 'subtitle': 'الزيارات المطلقة والمخصوصة وزيارة وارث وعاشوراء والأربعين', 'url': 'https://lib.rafed.net/view.php?b_id=1731&page=517&type=c_fbook'},
+    {'title': 'زيارة وارث', 'subtitle': 'النص ضمن مفاتيح الجنان', 'url': 'https://lib.rafed.net/view.php?b_id=1731&page=524&type=c_fbook'},
+    {'title': 'زيارة أبي الفضل العباس عليه السلام', 'subtitle': 'زيارة العباس بن علي عليه السلام في مفاتيح الجنان', 'url': sourceBook},
+    {'title': 'زيارة أمين الله', 'subtitle': 'زيارة مروية عن الإمام زين العابدين عليه السلام', 'url': 'https://lib.rafed.net/view.php?b_id=1731&page=443&type=c_fbook'},
+    {'title': 'زيارة عاشوراء', 'subtitle': 'الزيارة المشهورة والدعاء بعدها', 'url': sourceBook},
+    {'title': 'زيارة الأربعين', 'subtitle': 'زيارة يوم العشرين من صفر', 'url': sourceBook},
+    {'title': 'الزيارة الجامعة الكبيرة', 'subtitle': 'زيارة جامعة مروية عن الإمام الهادي عليه السلام', 'url': 'https://alseraj.net/%D9%85%D9%81%D8%A7%D8%AA%D9%8A%D8%AD_%D8%A7%D9%84%D8%AC%D9%86%D8%A7%D9%86/%D8%A7%D9%84%D8%B2%D9%8A%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%8A%D8%A9-%D8%A7%D9%84%D8%B2%D9%8A%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AC%D8%A7/'},
+    {'title': 'زيارة النبي صلى الله عليه وآله', 'subtitle': 'الزيارات وأعمال المدينة المنورة', 'url': sourceBook},
+    {'title': 'زيارة السيدة فاطمة الزهراء عليها السلام', 'subtitle': 'نص الزيارة ضمن مفاتيح الجنان', 'url': sourceBook},
+    {'title': 'زيارات أمير المؤمنين عليه السلام', 'subtitle': 'ومنها زيارة أمين الله وزيارة يوم الغدير', 'url': sourceBook},
+    {'title': 'زيارات أئمة أهل البيت عليهم السلام', 'subtitle': 'زيارات الأئمة في مفاتيح الجنان', 'url': sourceBook},
+    {'title': 'زيارة مسلم بن عقيل عليه السلام', 'subtitle': 'ضمن أعمال مسجد الكوفة', 'url': sourceBook},
+    {'title': 'زيارة الإمام الرضا عليه السلام', 'subtitle': 'الزيارة وأعمال المشهد الشريف', 'url': sourceBook},
+    {'title': 'زيارة الإمامين العسكريين عليهما السلام', 'subtitle': 'زيارات سامراء وأعمال السرداب', 'url': sourceBook},
+  ];
+
+  Future<void> _open(BuildContext context, String value) async {
+    final uri = Uri.tryParse(value);
+    if (uri == null || !await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('تعذّر فتح المصدر. تحقق من اتصال الإنترنت.')),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('الزيارات')),
+    body: ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: panelGreen,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: accentGold.withValues(alpha: .35)),
+          ),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.menu_book, color: accentGold, size: 32),
+              SizedBox(height: 10),
+              Text('مكتبة الزيارات', style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
+              SizedBox(height: 8),
+              Text(
+                'فهرس لأهم الزيارات مع فتح النصوص من مصادرها. يلزم الإنترنت لقراءة النصوص الخارجية؛ هذه القائمة ليست بعدُ مكتبةً كاملةً تعمل دون اتصال.',
+                style: TextStyle(color: Colors.white70, height: 1.6),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        ...entries.map((entry) => Card(
+          color: panelGreen,
+          child: ListTile(
+            leading: const Icon(Icons.mosque, color: accentGold),
+            title: Text(entry['title']!, style: const TextStyle(fontWeight: FontWeight.w600)),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Text(entry['subtitle']!, style: const TextStyle(color: Colors.white60, height: 1.4)),
+            ),
+            trailing: const Icon(Icons.open_in_new, color: accentGold, size: 20),
+            onTap: () => _open(context, entry['url']!),
+          ),
+        )),
+        const SizedBox(height: 8),
+        OutlinedButton.icon(
+          onPressed: () => _open(context, sourceBook),
+          icon: const Icon(Icons.library_books),
+          label: const Text('فتح كتاب مفاتيح الجنان كاملاً'),
+        ),
+      ],
+    ),
   );
 }
