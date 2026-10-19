@@ -1018,7 +1018,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 ),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
-                  value: city,
+                  initialValue: city,
                   dropdownColor: panelGreen,
                   decoration: const InputDecoration(
                     labelText: 'المدينة',
@@ -1123,7 +1123,7 @@ class _QiblaPageState extends State<QiblaPage> {
                 const Text('اتجاه الكعبة المشرفة', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 18),
                 DropdownButtonFormField<String>(
-                  value: city,
+                  initialValue: city,
                   dropdownColor: panelGreen,
                   decoration: const InputDecoration(labelText: 'المدينة', border: OutlineInputBorder()),
                   items: _PrayerTimesPageState.cities.keys.map((name) => DropdownMenuItem<String>(
