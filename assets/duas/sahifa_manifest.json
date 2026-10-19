@@ -387,5 +387,112 @@
       "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
     }
   ],
-  "note": "فهرس المصدر محفوظ هنا للتنظيم. تُضاف النصوص الكاملة بعد جلب كل صفحة ومراجعة سلامة النص؛ لا تعتبر الأعداد دليلاً على أن النصوص موجودة محلياً بعد."
+  "note": "فهرس المصدر محفوظ هنا للتنظيم. تُضاف النصوص الكاملة بعد جلب كل صفحة ومراجعة سلامة النص؛ لا تعتبر الأعداد دليلاً على أن النصوص موجودة محلياً بعد.",
+  "monologues": [
+    {
+      "number": 1,
+      "title": "مناجاة التائبين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 2,
+      "title": "مناجاة الشاكين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 3,
+      "title": "مناجاة الخائفين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 4,
+      "title": "مناجاة الراجين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 5,
+      "title": "مناجاة الراغبين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 6,
+      "title": "مناجاة الشاكرين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 7,
+      "title": "مناجاة المريدين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 8,
+      "title": "مناجاة المحبين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 9,
+      "title": "مناجاة المتوسلين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 10,
+      "title": "مناجاة المطعين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 11,
+      "title": "مناجاة المفتقرين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 12,
+      "title": "مناجاة العارفين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 13,
+      "title": "مناجاة الذاكرين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 14,
+      "title": "مناجاة المعتصمين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    },
+    {
+      "number": 15,
+      "title": "مناجاة الزاهدين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/imam-monologues"
+    }
+  ]
 }
