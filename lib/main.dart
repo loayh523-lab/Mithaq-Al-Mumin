@@ -1631,7 +1631,6 @@ class PrayerNotificationService {
             importance: Importance.max,
             priority: Priority.high,
             playSound: sound,
-            sound: sound ? const RawResourceAndroidNotificationSound('adhan_notice') : null,
           )),
           androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
         );
