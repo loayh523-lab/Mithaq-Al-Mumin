@@ -15,6 +15,9 @@ dependencies:
   shared_preferences: ^2.5.3
   flutter_compass: ^0.8.1
   flutter_svg: ^2.0.17
+  google_fonts: ^6.2.1
+  geolocator: ^13.0.2
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
