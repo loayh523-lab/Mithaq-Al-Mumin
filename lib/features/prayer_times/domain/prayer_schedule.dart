@@ -13,13 +13,16 @@ class PrayerEntry {
   final bool isPrayer;
 }
 
-/// Calculates the Ja'fari daily prayer schedule independently of the UI.
-///
-/// Keeping calculation and "next prayer" selection here makes the behaviour
-/// testable and prevents each screen from implementing its own time rules.
+/// Ja'fari daily prayer times and the rules for selecting the next prayer.
 class PrayerSchedule {
-  const PrayerSchedule._(this.entries);
+  const PrayerSchedule._({
+    required this.coordinates,
+    required this.date,
+    required this.entries,
+  });
 
+  final Coordinates coordinates;
+  final DateTime date;
   final List<PrayerEntry> entries;
 
   factory PrayerSchedule.forDate({
@@ -32,24 +35,32 @@ class PrayerSchedule {
       calculationParameters: CalculationMethodParameters.jafari(),
     );
 
-    return PrayerSchedule._(List.unmodifiable([
-      PrayerEntry(name: 'الفجر', time: times.fajr),
-      PrayerEntry(name: 'الشروق', time: times.sunrise, isPrayer: false),
-      PrayerEntry(name: 'الظهر', time: times.dhuhr),
-      PrayerEntry(name: 'العصر', time: times.asr),
-      PrayerEntry(name: 'المغرب', time: times.maghrib),
-      PrayerEntry(name: 'العشاء', time: times.isha),
-    ]));
+    return PrayerSchedule._(
+      coordinates: coordinates,
+      date: date,
+      entries: List.unmodifiable([
+        PrayerEntry(name: 'الفجر', time: times.fajr),
+        PrayerEntry(name: 'الشروق', time: times.sunrise, isPrayer: false),
+        PrayerEntry(name: 'الظهر', time: times.dhuhr),
+        PrayerEntry(name: 'العصر', time: times.asr),
+        PrayerEntry(name: 'المغرب', time: times.maghrib),
+        PrayerEntry(name: 'العشاء', time: times.isha),
+      ]),
+    );
   }
 
-  /// Returns the next actual prayer, never sunrise.
-  ///
-  /// After the final prayer of the day, Fajr is returned as the next day's
-  /// upcoming prayer. Callers should calculate a fresh schedule after midnight.
+  /// Returns the next prayer, skipping sunrise and rolling over to tomorrow's
+  /// Fajr when today's prayer times have all passed.
   PrayerEntry nextPrayer({required DateTime now}) {
     for (final entry in entries) {
       if (entry.isPrayer && entry.time.isAfter(now)) return entry;
     }
-    return entries.firstWhere((entry) => entry.name == 'الفجر');
+
+    final tomorrow = DateTime(date.year, date.month, date.day + 1);
+    final nextDay = PrayerSchedule.forDate(
+      coordinates: coordinates,
+      date: tomorrow,
+    );
+    return nextDay.entries.firstWhere((entry) => entry.name == 'الفجر');
   }
 }
