@@ -1,266 +1,1316 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "language": "ar",
   "offline": true,
   "sections": [
     {
       "name": "الأدعية المشهورة والعامة",
       "items": [
-        "دعاء كميل بن زياد",
-        "دعاء الصباح",
-        "دعاء التوسل",
-        "دعاء الندبة",
-        "دعاء العهد",
-        "دعاء الفرج",
-        "دعاء السمات",
-        "دعاء المشلول",
-        "دعاء الجوشن الكبير",
-        "دعاء الجوشن الصغير",
-        "دعاء العديلة",
-        "دعاء العشرات",
-        "دعاء المجير",
-        "دعاء يستشير",
-        "دعاء أبي حمزة الثمالي",
-        "دعاء الافتتاح",
-        "دعاء البهاء",
-        "دعاء مكارم الأخلاق",
-        "دعاء علقمة",
-        "دعاء صفوان",
-        "دعاء الحزين",
-        "دعاء الملهوف",
-        "دعاء سريع الإجابة",
-        "دعاء النور",
-        "دعاء الفرج «إلهي عظم البلاء»",
-        "دعاء الاحتجاب",
-        "دعاء العديلة عند الموت",
-        "دعاء التوبة",
-        "دعاء الاستغفار",
-        "دعاء قضاء الحوائج"
+        {
+          "title": "دعاء كميل بن زياد",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الصباح",
+          "kind": "text",
+          "source": "مفاتيح الجنان للشيخ عباس القمي؛ يلزم مقابلة النص مع طبعة معتمدة قبل الإصدار النهائي.",
+          "offline": true
+        },
+        {
+          "title": "دعاء التوسل",
+          "kind": "text",
+          "source": "النص المتداول لدعاء التوسل في كتب الأدعية الإمامية.",
+          "offline": true
+        },
+        {
+          "title": "دعاء الندبة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء العهد",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الفرج",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء السمات",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء المشلول",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الجوشن الكبير",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الجوشن الصغير",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء العديلة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء العشرات",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء المجير",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يستشير",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء أبي حمزة الثمالي",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الافتتاح",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء البهاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء مكارم الأخلاق",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء علقمة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء صفوان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الحزين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الملهوف",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء سريع الإجابة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء النور",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الفرج «إلهي عظم البلاء»",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الاحتجاب",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء العديلة عند الموت",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء التوبة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الاستغفار",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء قضاء الحوائج",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "أدعية الصحيفة السجادية",
       "items": [
-        "دعاؤه في التحميد لله عز وجل",
-        "دعاؤه في الصلاة على محمد وآله",
-        "دعاؤه لنفسه وخاصته",
-        "دعاؤه عند الصباح والمساء",
-        "دعاؤه في المهمات",
-        "دعاؤه في الاستعاذة",
-        "دعاؤه في طلب المغفرة",
-        "دعاؤه في الالتجاء إلى الله",
-        "دعاؤه بخواتيم الخير",
-        "دعاؤه في الاعتراف وطلب التوبة",
-        "دعاؤه في طلب الحوائج",
-        "دعاؤه في الظلامات",
-        "دعاؤه عند المرض",
-        "دعاؤه في طلب العفو",
-        "دعاؤه عند الاستسقاء",
-        "دعاؤه في مكارم الأخلاق",
-        "دعاؤه إذا حزنه أمر",
-        "دعاؤه عند الشدة وتعسر الأمور",
-        "دعاؤه بالعافية",
-        "دعاؤه لوالديه",
-        "دعاؤه لولده",
-        "دعاؤه لجيرانه وأوليائه",
-        "دعاؤه لأهل الثغور",
-        "دعاؤه عند ضيق الرزق",
-        "دعاؤه في قضاء الدين",
-        "دعاؤه في الرضا بالقضاء",
-        "دعاؤه عند سماع الرعد",
-        "دعاؤه في الشكر لله",
-        "دعاؤه عند ذكر الموت",
-        "دعاؤه في طلب الستر والوقاية",
-        "دعاؤه عند ختم القرآن",
-        "دعاؤه عند رؤية الهلال",
-        "دعاؤه لدخول شهر رمضان",
-        "دعاؤه لوداع شهر رمضان",
-        "دعاؤه في يوم عرفة",
-        "دعاؤه يوم الأضحى والجمعة",
-        "دعاؤه في دفع كيد الأعداء",
-        "دعاؤه في التضرع والاستكانة",
-        "دعاؤه في الإلحاح على الله",
-        "دعاؤه في استكشاف الهموم"
+        {
+          "title": "دعاؤه في التحميد لله عز وجل",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الصلاة على محمد وآله",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه لنفسه وخاصته",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند الصباح والمساء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في المهمات",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الاستعاذة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في طلب المغفرة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الالتجاء إلى الله",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه بخواتيم الخير",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الاعتراف وطلب التوبة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في طلب الحوائج",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الظلامات",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند المرض",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في طلب العفو",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند الاستسقاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في مكارم الأخلاق",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه إذا حزنه أمر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند الشدة وتعسر الأمور",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه بالعافية",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه لوالديه",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه لولده",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه لجيرانه وأوليائه",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه لأهل الثغور",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند ضيق الرزق",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في قضاء الدين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الرضا بالقضاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند سماع الرعد",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الشكر لله",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند ذكر الموت",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في طلب الستر والوقاية",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند ختم القرآن",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه عند رؤية الهلال",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه لدخول شهر رمضان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه لوداع شهر رمضان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في يوم عرفة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه يوم الأضحى والجمعة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في دفع كيد الأعداء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في التضرع والاستكانة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في الإلحاح على الله",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاؤه في استكشاف الهموم",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "المناجيات الخمس عشرة",
       "items": [
-        "مناجاة التائبين",
-        "مناجاة الشاكين",
-        "مناجاة الخائفين",
-        "مناجاة الراجين",
-        "مناجاة الراغبين",
-        "مناجاة الشاكرين",
-        "مناجاة المريدين",
-        "مناجاة المحبين",
-        "مناجاة المطيعين",
-        "مناجاة المتوسلين",
-        "مناجاة المفتقرين",
-        "مناجاة العارفين",
-        "مناجاة الذاكرين",
-        "مناجاة المعتصمين",
-        "مناجاة الزاهدين"
+        {
+          "title": "مناجاة التائبين",
+          "kind": "text",
+          "source": "الصحيفة السجادية، المناجيات الخمس عشرة؛ يلزم مقابلة النص مع طبعة معتمدة قبل الإصدار النهائي.",
+          "offline": true
+        },
+        {
+          "title": "مناجاة الشاكين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة الخائفين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة الراجين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة الراغبين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة الشاكرين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة المريدين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة المحبين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة المطيعين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة المتوسلين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة المفتقرين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة العارفين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة الذاكرين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة المعتصمين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "مناجاة الزاهدين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "أدعية الإمام المهدي عليه السلام والفرج",
       "items": [
-        "دعاء الفرج",
-        "دعاء العهد",
-        "دعاء الندبة",
-        "دعاء زمن الغيبة",
-        "دعاء «اللهم كن لوليك الحجة بن الحسن»",
-        "دعاء «إلهي عظم البلاء»",
-        "دعاء الاستغاثة بالحجة",
-        "دعاء طلب تعجيل الفرج",
-        "دعاء السلام على الإمام المهدي عليه السلام"
+        {
+          "title": "دعاء الفرج",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء العهد",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الندبة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زمن الغيبة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء «اللهم كن لوليك الحجة بن الحسن»",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء «إلهي عظم البلاء»",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الاستغاثة بالحجة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب تعجيل الفرج",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء السلام على الإمام المهدي عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "الأدعية اليومية وأدعية أوقات الصلاة",
       "items": [
-        "دعاء الصباح",
-        "دعاء المساء",
-        "دعاء قبل النوم",
-        "دعاء الاستيقاظ",
-        "دعاء دخول المنزل",
-        "دعاء الخروج من المنزل",
-        "دعاء السفر",
-        "دعاء ركوب الدابة أو وسيلة النقل",
-        "دعاء قضاء الحاجة",
-        "دعاء طلب الرزق",
-        "دعاء تفريج الهم",
-        "دعاء دفع البلاء",
-        "دعاء الحفظ",
-        "دعاء طلب العلم",
-        "دعاء طلب التوفيق",
-        "دعاء الوالدين",
-        "دعاء للمريض",
-        "دعاء زيارة المريض",
-        "دعاء عند نزول المطر",
-        "دعاء عند سماع الرعد",
-        "دعاء عند رؤية الهلال",
-        "دعاء دخول المسجد",
-        "دعاء الخروج من المسجد",
-        "دعاء بعد الصلاة",
-        "دعاء تعقيب صلاة الفجر",
-        "دعاء تعقيب صلاة الظهر",
-        "دعاء تعقيب صلاة العصر",
-        "دعاء تعقيب صلاة المغرب",
-        "دعاء تعقيب صلاة العشاء",
-        "دعاء يوم الجمعة"
+        {
+          "title": "دعاء الصباح",
+          "kind": "text",
+          "source": "مفاتيح الجنان للشيخ عباس القمي؛ يلزم مقابلة النص مع طبعة معتمدة قبل الإصدار النهائي.",
+          "offline": true
+        },
+        {
+          "title": "دعاء المساء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء قبل النوم",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الاستيقاظ",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء دخول المنزل",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الخروج من المنزل",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء السفر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء ركوب الدابة أو وسيلة النقل",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء قضاء الحاجة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب الرزق",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء تفريج الهم",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء دفع البلاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الحفظ",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب العلم",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب التوفيق",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الوالدين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء للمريض",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة المريض",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء عند نزول المطر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء عند سماع الرعد",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء عند رؤية الهلال",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء دخول المسجد",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الخروج من المسجد",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء بعد الصلاة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء تعقيب صلاة الفجر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء تعقيب صلاة الظهر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء تعقيب صلاة العصر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء تعقيب صلاة المغرب",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء تعقيب صلاة العشاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يوم الجمعة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "أدعية شهر رمضان",
       "items": [
-        "دعاء الافتتاح",
-        "دعاء أبي حمزة الثمالي",
-        "دعاء البهاء",
-        "دعاء السحر",
-        "دعاء اليوم الأول من شهر رمضان",
-        "أدعية أيام شهر رمضان",
-        "دعاء وداع شهر رمضان",
-        "دعاء ليلة القدر",
-        "دعاء الجوشن الكبير",
-        "دعاء رفع المصاحف",
-        "دعاء طلب المغفرة والرحمة",
-        "دعاء طلب العتق من النار"
+        {
+          "title": "دعاء الافتتاح",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء أبي حمزة الثمالي",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء البهاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء السحر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء اليوم الأول من شهر رمضان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "أدعية أيام شهر رمضان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء وداع شهر رمضان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء ليلة القدر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الجوشن الكبير",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء رفع المصاحف",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب المغفرة والرحمة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب العتق من النار",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "أدعية الأيام والأشهر والمناسبات",
       "items": [
-        "دعاء يوم عرفة",
-        "دعاء يوم الغدير",
-        "دعاء يوم الجمعة",
-        "دعاء يوم الأضحى",
-        "دعاء يوم الفطر",
-        "دعاء يوم المباهلة",
-        "دعاء شهر رجب",
-        "دعاء شهر شعبان",
-        "دعاء شهر رمضان",
-        "دعاء شهر ذي الحجة",
-        "دعاء أم داود",
-        "دعاء النصف من شعبان",
-        "دعاء ليلة الجمعة",
-        "دعاء ليلة القدر",
-        "دعاء يوم عاشوراء",
-        "دعاء الأربعين",
-        "دعاء يوم المبعث",
-        "دعاء أيام البيض"
+        {
+          "title": "دعاء يوم عرفة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يوم الغدير",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يوم الجمعة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يوم الأضحى",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يوم الفطر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يوم المباهلة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء شهر رجب",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء شهر شعبان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء شهر رمضان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء شهر ذي الحجة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء أم داود",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء النصف من شعبان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء ليلة الجمعة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء ليلة القدر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يوم عاشوراء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الأربعين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء يوم المبعث",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء أيام البيض",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "أدعية التوبة والعبادة والأخلاق",
       "items": [
-        "دعاء التوبة والإنابة",
-        "دعاء الاستغفار",
-        "دعاء طلب الرحمة",
-        "دعاء طلب العفو",
-        "دعاء شكر النعم",
-        "دعاء التوكل على الله",
-        "دعاء الرضا بالقضاء",
-        "دعاء حسن العاقبة",
-        "دعاء الثبات على الدين",
-        "دعاء حسن الخلق",
-        "دعاء دفع الوسوسة",
-        "دعاء الاستعاذة من الشيطان",
-        "دعاء الخوف والرجاء",
-        "دعاء الخشوع",
-        "دعاء الإخلاص",
-        "دعاء طلب الهداية",
-        "دعاء طلب الصبر",
-        "دعاء طلب الحلم",
-        "دعاء طلب العافية",
-        "دعاء حسن الخاتمة"
+        {
+          "title": "دعاء التوبة والإنابة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الاستغفار",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب الرحمة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب العفو",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء شكر النعم",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء التوكل على الله",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الرضا بالقضاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء حسن العاقبة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الثبات على الدين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء حسن الخلق",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء دفع الوسوسة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الاستعاذة من الشيطان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الخوف والرجاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الخشوع",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الإخلاص",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب الهداية",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب الصبر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب الحلم",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب العافية",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء حسن الخاتمة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "أدعية الرزق والحاجات والشدائد",
       "items": [
-        "دعاء قضاء الدين",
-        "دعاء سعة الرزق",
-        "دعاء دفع الفقر",
-        "دعاء تفريج الكرب",
-        "دعاء كشف الغم",
-        "دعاء دفع الهم والحزن",
-        "دعاء الأمن من الخوف",
-        "دعاء دفع الظلم",
-        "دعاء النصر على الأعداء",
-        "دعاء الحفظ من البلاء",
-        "دعاء الشفاء",
-        "دعاء طلب الذرية",
-        "دعاء صلاح الأبناء",
-        "دعاء الزواج",
-        "دعاء طلب النجاح",
-        "دعاء التوفيق في الدراسة",
-        "دعاء طلب العلم النافع",
-        "دعاء الاستخارة",
-        "دعاء طلب الحاجة من الله",
-        "دعاء للغائب والمسافر"
+        {
+          "title": "دعاء قضاء الدين",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء سعة الرزق",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء دفع الفقر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء تفريج الكرب",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء كشف الغم",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء دفع الهم والحزن",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الأمن من الخوف",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء دفع الظلم",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء النصر على الأعداء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الحفظ من البلاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الشفاء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب الذرية",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء صلاح الأبناء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الزواج",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب النجاح",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء التوفيق في الدراسة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب العلم النافع",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الاستخارة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء طلب الحاجة من الله",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء للغائب والمسافر",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     },
     {
       "name": "أدعية وزيارات مرتبطة بأهل البيت عليهم السلام",
       "items": [
-        "دعاء التوسل بالأئمة عليهم السلام",
-        "دعاء الزيارة الجامعة الكبيرة",
-        "دعاء الزيارة الجامعة الصغيرة",
-        "دعاء الزيارة لأمير المؤمنين عليه السلام",
-        "دعاء زيارة فاطمة الزهراء عليها السلام",
-        "دعاء زيارة الإمام الحسين عليه السلام",
-        "دعاء زيارة أبي الفضل العباس عليه السلام",
-        "دعاء زيارة الإمام السجاد عليه السلام",
-        "دعاء زيارة الإمام الرضا عليه السلام",
-        "دعاء زيارة الإمام الجواد عليه السلام",
-        "دعاء زيارة الإمام الهادي عليه السلام",
-        "دعاء زيارة الإمام العسكري عليه السلام",
-        "دعاء زيارة الإمام المهدي عليه السلام",
-        "دعاء علقمة بعد زيارة عاشوراء",
-        "دعاء صفوان",
-        "دعاء الزيارة في يوم الغدير"
+        {
+          "title": "دعاء التوسل بالأئمة عليهم السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الزيارة الجامعة الكبيرة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الزيارة الجامعة الصغيرة",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الزيارة لأمير المؤمنين عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة فاطمة الزهراء عليها السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة الإمام الحسين عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة أبي الفضل العباس عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة الإمام السجاد عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة الإمام الرضا عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة الإمام الجواد عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة الإمام الهادي عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة الإمام العسكري عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء زيارة الإمام المهدي عليه السلام",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء علقمة بعد زيارة عاشوراء",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء صفوان",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        },
+        {
+          "title": "دعاء الزيارة في يوم الغدير",
+          "kind": "index",
+          "source": null,
+          "offline": false
+        }
       ]
     }
   ],
@@ -278,5 +1328,5 @@
     "اللهم كن لوليك الحجة بن الحسن": "دعاء منقول في كتب الأدعية الإمامية؛ يلزم توثيق المصدر التفصيلي والصيغة.",
     "دعاء الفرج: إلهي عظم البلاء": "الدعاء المعروف بإلهي عظم البلاء؛ توجد اختلافات لفظية بين النسخ."
   },
-  "catalog_note": "العناوين الفهرسية ليست كلها نصوصا مستقلة؛ يُضاف النص الكامل فقط بعد تحديد مصدره ومقابلته. النصوص غير المتوفرة تبقى عناوين فهرس ولا تُعرض كأنها مكتملة."
+  "catalog_note": "العناوين غير المتوفرة نصوصها الكاملة هي فهرس فقط. لا تُعرض كأدعية مكتملة حتى يضاف نص موثق. قد يظهر الدعاء في أكثر من قسم للمناسبة، مع الاحتفاظ بنسخة نصية واحدة."
 }
