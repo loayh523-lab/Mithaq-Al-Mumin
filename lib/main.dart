@@ -3,6 +3,11 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'app/app_theme.dart';
+
+// Compatibility aliases retained while legacy screens are migrated.
+const deepGreen = AppPalette.deepGreen;
+const panelGreen = AppPalette.panelGreen;
+const accentGold = AppPalette.accentGold;
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
