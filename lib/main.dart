@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adhan_dart/adhan_dart.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final features = [
       ['القرآن الكريم', 'قراءة سور مختارة', Icons.menu_book, 'quran'],
-      ['مواقيت الصلاة', 'الأوقات والأذان', Icons.access_time, 'later'],
+      ['مواقيت الصلاة', 'حساب أوقات الصلاة', Icons.access_time, 'prayer'],
       ['الأدعية والأذكار', 'تسبيح واستغفار وصلاة', Icons.volunteer_activism, 'adhkar'],
       ['الزيارات', 'الزيارات الكاملة ومصادرها', Icons.mosque, 'ziyarat'],
       ['اتجاه القبلة', 'تحديد اتجاه القبلة', Icons.explore, 'later'],
@@ -73,6 +74,8 @@ class HomePage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const AdhkarPage()));
                 } else if (f[3] == 'ziyarat') {
                   Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const ZiyaratPage()));
+                } else if (f[3] == 'prayer') {
+                  Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const PrayerTimesPage()));
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('قسم ' + (f[0] as String) + ' قيد التطوير')));
                 }
@@ -462,4 +465,117 @@ class _ZiyaratTextPageState extends State<ZiyaratTextPage> {
       ],
     ),
   );
+}
+
+
+class PrayerTimesPage extends StatefulWidget {
+  const PrayerTimesPage({super.key});
+
+  @override
+  State<PrayerTimesPage> createState() => _PrayerTimesPageState();
+}
+
+class _PrayerTimesPageState extends State<PrayerTimesPage> {
+  static const cities = <String, Coordinates>{
+    'قلعة سكر': Coordinates(31.8632, 46.0732),
+    'الناصرية': Coordinates(31.05799, 46.25726),
+    'بغداد': Coordinates(33.3152, 44.3661),
+    'النجف': Coordinates(32.0003, 44.3354),
+    'كربلاء': Coordinates(32.616, 44.024),
+    'البصرة': Coordinates(30.5085, 47.7804),
+  };
+
+  String city = 'قلعة سكر';
+
+  String formatTime(DateTime value) {
+    final local = value.toLocal();
+    final hour = local.hour % 12 == 0 ? 12 : local.hour % 12;
+    final minute = local.minute.toString().padLeft(2, '0');
+    final suffix = local.hour >= 12 ? 'م' : 'ص';
+    return '$hour:$minute $suffix';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final params = CalculationMethodParameters.jafari()
+      ..madhab = Madhab.shafi;
+    final prayerTimes = PrayerTimes(
+      coordinates: cities[city]!,
+      date: DateTime.now(),
+      calculationParameters: params,
+    );
+    final items = <Map<String, Object>>[
+      {'name': 'الفجر', 'time': prayerTimes.fajr, 'icon': Icons.wb_twilight},
+      {'name': 'الشروق', 'time': prayerTimes.sunrise, 'icon': Icons.wb_sunny_outlined},
+      {'name': 'الظهر', 'time': prayerTimes.dhuhr, 'icon': Icons.wb_sunny},
+      {'name': 'العصر', 'time': prayerTimes.asr, 'icon': Icons.sunny},
+      {'name': 'المغرب', 'time': prayerTimes.maghrib, 'icon': Icons.wb_twilight},
+      {'name': 'العشاء', 'time': prayerTimes.isha, 'icon': Icons.nights_stay},
+    ];
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('مواقيت الصلاة')),
+      body: ListView(
+        padding: const EdgeInsets.all(18),
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF17483A), Color(0xFF0D2B24)],
+              ),
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: accentGold.withValues(alpha: .35)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.access_time, color: accentGold, size: 32),
+                const SizedBox(height: 10),
+                const Text('مواقيت اليوم', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 6),
+                Text(
+                  '\${DateTime.now().year}/\${DateTime.now().month}/\${DateTime.now().day}',
+                  style: const TextStyle(color: Colors.white70),
+                ),
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: city,
+                  dropdownColor: panelGreen,
+                  decoration: const InputDecoration(
+                    labelText: 'المدينة',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: cities.keys.map((name) => DropdownMenuItem<String>(
+                    value: name,
+                    child: Text(name),
+                  )).toList(),
+                  onChanged: (value) {
+                    if (value != null) setState(() => city = value);
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 14),
+          ...items.map((item) => Card(
+            color: panelGreen,
+            child: ListTile(
+              leading: Icon(item['icon'] as IconData, color: accentGold),
+              title: Text(item['name'] as String, style: const TextStyle(fontWeight: FontWeight.w600)),
+              trailing: Text(
+                formatTime(item['time'] as DateTime),
+                style: const TextStyle(color: accentGold, fontSize: 17, fontWeight: FontWeight.bold),
+              ),
+            ),
+          )),
+          const SizedBox(height: 10),
+          const Text(
+            'طريقة الحساب: الجعفري (تقريب فلكي). قد تختلف الأوقات عن الجداول المحلية أو توقيت الإمساك والأذان المعتمد؛ راجع المصدر الديني المحلي واضبط المدينة الصحيحة. هذه النسخة تعرض الأوقات فقط ولا ترسل أذاناً أو إشعارات بعد.',
+            style: TextStyle(color: Colors.white54, height: 1.6, fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
 }
