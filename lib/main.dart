@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adhan_dart/adhan_dart.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -171,6 +172,31 @@ class _AdhkarPageState extends State<AdhkarPage> {
   ];
   int selected = 0;
   int count = 0;
+  final List<int> savedCounts = [0, 0, 0];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProgress();
+  }
+
+  Future<void> _loadProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      selected = (prefs.getInt('adhkar_selected') ?? 0).clamp(0, adhkar.length - 1);
+      for (var i = 0; i < savedCounts.length; i++) {
+        savedCounts[i] = prefs.getInt('adhkar_count_$i') ?? 0;
+      }
+      count = savedCounts[selected];
+    });
+  }
+
+  Future<void> _saveProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('adhkar_selected', selected);
+    await prefs.setInt('adhkar_count_$selected', count);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +218,7 @@ class _AdhkarPageState extends State<AdhkarPage> {
                 child: ListTile(
                   title: Text(adhkar[i]['title'] as String),
                   trailing: selected == i ? const Icon(Icons.check_circle, color: accentGold) : null,
-                  onTap: () => setState(() { selected = i; count = 0; }),
+                  onTap: () { setState(() { selected = i; count = savedCounts[i]; }); _saveProgress(); },
                 ),
               ),
             )),
@@ -215,14 +241,14 @@ class _AdhkarPageState extends State<AdhkarPage> {
             ),
             const SizedBox(height: 18),
             SizedBox(height: 58, child: FilledButton.icon(
-              onPressed: () => setState(() { if (count < target) count++; }),
+              onPressed: () { setState(() { if (count < target) count++; savedCounts[selected] = count; }); _saveProgress(); },
               icon: const Icon(Icons.touch_app),
               label: const Text('سبّح', style: TextStyle(fontSize: 20)),
               style: FilledButton.styleFrom(backgroundColor: accentGold, foregroundColor: deepGreen),
             )),
             const SizedBox(height: 10),
             OutlinedButton.icon(
-              onPressed: () => setState(() => count = 0),
+              onPressed: () { setState(() { count = 0; savedCounts[selected] = 0; }); _saveProgress(); },
               icon: const Icon(Icons.restart_alt), label: const Text('تصفير العدّاد'),
             ),
             const SizedBox(height: 12),
@@ -242,6 +268,29 @@ class TasbihPage extends StatefulWidget {
 class _TasbihPageState extends State<TasbihPage> {
   int count = 0;
   int target = 100;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProgress();
+  }
+
+  Future<void> _loadProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      count = prefs.getInt('tasbih_count') ?? 0;
+      target = prefs.getInt('tasbih_target') ?? 100;
+      if (![33, 100, 1000].contains(target)) target = 100;
+    });
+  }
+
+  Future<void> _saveProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('tasbih_count', count);
+    await prefs.setInt('tasbih_target', target);
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('المسبحة الإلكترونية')),
@@ -258,18 +307,18 @@ class _TasbihPageState extends State<TasbihPage> {
         borderRadius: BorderRadius.circular(10), backgroundColor: Colors.white12, color: accentGold),
       const Spacer(),
       SizedBox(width: 190, height: 190, child: FilledButton(
-        onPressed: () => setState(() => count++),
+        onPressed: () { setState(() => count++); _saveProgress(); },
         style: FilledButton.styleFrom(backgroundColor: panelGreen, foregroundColor: accentGold,
           shape: const CircleBorder(side: BorderSide(color: accentGold, width: 2))),
         child: const Text('تسبيح', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)))),
       const SizedBox(height: 22),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        OutlinedButton.icon(onPressed: () => setState(() => count = 0),
+        OutlinedButton.icon(onPressed: () { setState(() => count = 0); _saveProgress(); },
           icon: const Icon(Icons.restart_alt), label: const Text('تصفير العدّاد')),
         const SizedBox(width: 12),
         DropdownButton<int>(value: target, dropdownColor: panelGreen,
           items: const [DropdownMenuItem(value: 33, child: Text('33')), DropdownMenuItem(value: 100, child: Text('100')), DropdownMenuItem(value: 1000, child: Text('1000'))],
-          onChanged: (v) { if (v != null) setState(() => target = v); }),
+          onChanged: (v) { if (v != null) { setState(() => target = v); _saveProgress(); } }),
       ]),
       const SizedBox(height: 18),
     ])),
