@@ -1593,6 +1593,39 @@ class _OccasionCard extends StatelessWidget {
   ])));
 }
 
+const Map<String, String> verifiedDuaTexts = {
+  'دعاء التوسل': '''اللهم إني أسألك وأتوجه إليك بنبيك نبي الرحمة محمد صلى الله عليه وآله، يا أبا القاسم يا رسول الله يا إمام الرحمة يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا الحسن يا أمير المؤمنين يا علي بن أبي طالب، يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا فاطمة الزهراء يا بنت محمد يا قرة عين الرسول، يا سيدتنا ومولاتنا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيهة عند الله اشفعي لنا عند الله.
+
+يا أبا محمد يا حسن بن علي أيها المجتبى يا ابن رسول الله، يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا عبد الله يا حسين بن علي أيها الشهيد يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا الحسن يا علي بن الحسين يا زين العابدين يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا جعفر يا محمد بن علي أيها الباقر يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا عبد الله يا جعفر بن محمد أيها الصادق يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا الحسن يا موسى بن جعفر أيها الكاظم يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا الحسن يا علي بن موسى أيها الرضا يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا جعفر يا محمد بن علي أيها التقي الجواد يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا الحسن يا علي بن محمد أيها الهادي النقي يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا أبا محمد يا حسن بن علي أيها الزكي العسكري يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+يا وصي الحسن والخلف الحجة أيها القائم المنتظر المهدي يا ابن رسول الله يا حجة الله على خلقه يا سيدنا ومولانا إنا توجهنا واستشفعنا وتوسلنا بك إلى الله وقدمناك بين يدي حاجاتنا يا وجيها عند الله اشفع لنا عند الله.
+
+ثم سل حوائجك، وبعد ذلك قل:
+يا سادتي وموالي إني توجهت بكم أئمتي وعدتي ليوم فقري وحاجتي إلى الله، وتوسلت بكم إلى الله، واستشفعت بكم إلى الله، فاشفعوا لي عند الله، واستنقذوني من ذنوبي عند الله، فإنكم وسيلتي إلى الله وبحبكم وبقربكم أرجو نجاة من الله، فكونوا عند الله رجائي يا سادتي يا أولياء الله، صلى الله عليهم أجمعين ولعن الله أعداء الله ظالميهم من الأولين والآخرين آمين رب العالمين.''',
+  'اللهم كن لوليك الحجة بن الحسن': '''اللهم كن لوليك الحجة بن الحسن، صلواتك عليه وعلى آبائه، في هذه الساعة وفي كل ساعة، وليا وحافظا وقائدا وناصرا ودليلا وعينا، حتى تسكنه أرضك طوعا وتمتعه فيها طويلا.''',
+};
 class DuaLibraryPage extends StatefulWidget {
   const DuaLibraryPage({super.key});
   @override State<DuaLibraryPage> createState() => _DuaLibraryPageState();
@@ -1618,7 +1651,7 @@ class _DuaLibraryPageState extends State<DuaLibraryPage> {
       for (final entry in filtered.entries)
         Card(color: panelGreen, margin: const EdgeInsets.only(bottom: 10), child: ExpansionTile(initiallyExpanded: query.trim().isNotEmpty, iconColor: accentGold, collapsedIconColor: accentGold, title: Text(entry.key, style: const TextStyle(color: accentGold, fontWeight: FontWeight.bold, fontSize: 16)), subtitle: Text('${entry.value.length} عنوان', style: const TextStyle(color: Colors.white54, fontSize: 12)), children: [
           for (final name in entry.value)
-            ListTile(dense: true, leading: const Icon(Icons.menu_book_rounded, color: Colors.white54, size: 19), title: Text(name, style: const TextStyle(fontSize: 14)), subtitle: const Text('ضمن الفهرس — النص الموثّق يُضاف على مراحل', style: TextStyle(color: Colors.white38, fontSize: 11))),
+            ListTile(dense: true, leading: Icon(verifiedDuaTexts.containsKey(name) ? Icons.menu_book_rounded : Icons.library_books_outlined, color: verifiedDuaTexts.containsKey(name) ? accentGold : Colors.white54, size: 19), title: Text(name, style: const TextStyle(fontSize: 14)), subtitle: Text(verifiedDuaTexts.containsKey(name) ? 'النص الكامل متاح — اضغط للقراءة والنسخ' : 'ضمن الفهرس — النص الكامل قيد الإضافة والتوثيق', style: TextStyle(color: verifiedDuaTexts.containsKey(name) ? accentGold : Colors.white38, fontSize: 11)), onTap: () { final text = verifiedDuaTexts[name]; if (text == null) { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('هذا النص بعده قيد المراجعة والتوثيق، ما أضفناه حتى نتجنب الأخطاء.'))); return; } showDialog<void>(context: context, builder: (dialogContext) => AlertDialog(backgroundColor: deepGreen, title: Text(name, style: const TextStyle(color: accentGold)), content: SizedBox(width: double.maxFinite, child: SingleChildScrollView(child: SelectableText('$text\\n\\nالمصدر: ويكي مصدر — دعاء التوسل، مع مراجعة النص على صفحة المصدر.', style: const TextStyle(fontSize: 16, height: 2.0)))), actions: [TextButton.icon(onPressed: () async { await Clipboard.setData(ClipboardData(text: '$name\\n\\n$text')); if (dialogContext.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم نسخ الدعاء'))); }, icon: const Icon(Icons.copy_rounded), label: const Text('نسخ')), TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('إغلاق'))])); }),
         ])),
       if (filtered.isEmpty) const Padding(padding: EdgeInsets.all(24), child: Text('ما لكيت نتيجة بهذا الاسم.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white60))),
       const SizedBox(height: 12),
