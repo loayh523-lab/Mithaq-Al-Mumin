@@ -543,6 +543,24 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
 
   String city = 'قلعة سكر';
 
+  @override
+  void initState() {
+    super.initState();
+    _loadCity();
+  }
+
+  Future<void> _loadCity() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getString('selected_city');
+    if (!mounted) return;
+    if (saved != null && cities.containsKey(saved)) setState(() => city = saved);
+  }
+
+  Future<void> _saveCity(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selected_city', value);
+  }
+
   String formatTime(DateTime value) {
     final local = value.toLocal();
     final hour = local.hour % 12 == 0 ? 12 : local.hour % 12;
@@ -553,8 +571,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final params = CalculationMethodParameters.jafari()
-      ..madhab = Madhab.shafi;
+    final params = CalculationMethodParameters.jafari();
     final prayerTimes = PrayerTimes(
       coordinates: cities[city]!,
       date: DateTime.now(),
@@ -607,7 +624,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                     child: Text(name),
                   )).toList(),
                   onChanged: (value) {
-                    if (value != null) setState(() => city = value);
+                    if (value != null) { setState(() => city = value); _saveCity(value); }
                   },
                 ),
               ],
@@ -646,6 +663,26 @@ class QiblaPage extends StatefulWidget {
 
 class _QiblaPageState extends State<QiblaPage> {
   String city = 'قلعة سكر';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCity();
+  }
+
+  Future<void> _loadCity() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getString('selected_city');
+    if (!mounted) return;
+    if (saved != null && _PrayerTimesPageState.cities.containsKey(saved)) {
+      setState(() => city = saved);
+    }
+  }
+
+  Future<void> _saveCity(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selected_city', value);
+  }
 
   double bearing(Coordinates coordinates) {
     const kaabaLat = 21.4225;
