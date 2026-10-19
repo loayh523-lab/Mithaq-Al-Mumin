@@ -1694,7 +1694,44 @@ class _DuaLibraryPageState extends State<DuaLibraryPage> {
       for (final entry in filtered.entries)
         Card(color: panelGreen, margin: const EdgeInsets.only(bottom: 10), child: ExpansionTile(initiallyExpanded: query.trim().isNotEmpty, iconColor: accentGold, collapsedIconColor: accentGold, title: Text(entry.key, style: const TextStyle(color: accentGold, fontWeight: FontWeight.bold, fontSize: 16)), subtitle: Text('${entry.value.length} عنوان', style: const TextStyle(color: Colors.white54, fontSize: 12)), children: [
           for (final name in entry.value)
-            ListTile(dense: true, leading: Icon(verifiedDuaTexts.containsKey(name) ? Icons.menu_book_rounded : Icons.library_books_outlined, color: verifiedDuaTexts.containsKey(name) ? accentGold : Colors.white54, size: 19), title: Text(name, style: const TextStyle(fontSize: 14)), subtitle: Text(verifiedDuaTexts.containsKey(name) ? 'النص الكامل متاح — اضغط للقراءة والنسخ' : 'ضمن الفهرس — النص الكامل قيد الإضافة والتوثيق', style: TextStyle(color: verifiedDuaTexts.containsKey(name) ? accentGold : Colors.white38, fontSize: 11)), onTap: () { final text = duaTexts[name]; if (text == null) { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('هذا النص بعده قيد المراجعة والتوثيق، ما أضفناه حتى نتجنب الأخطاء.'))); return; } showDialog<void>(context: context, builder: (dialogContext) => AlertDialog(backgroundColor: deepGreen, title: Text(name, style: const TextStyle(color: accentGold)), content: SizedBox(width: double.maxFinite, child: SingleChildScrollView(child: SelectableText('$text\\n\\nالمصدر: ${duaSources[name] ?? (name == 'دعاء التوسل' ? 'دعاء التوسل، النص المتداول في كتب الأدعية الإمامية' : name == 'دعاء الصباح' ? 'مفاتيح الجنان للشيخ عباس القمي، دعاء الصباح' : name == 'مناجاة التائبين' ? 'الصحيفة السجادية، المناجيات الخمس عشرة' : 'دعاء وارد في كتب الأدعية الإمامية؛ يحتاج إلى توثيق مصدره التفصيلي قبل النشر النهائي'))}.', style: const TextStyle(fontSize: 16, height: 2.0)))), actions: [TextButton.icon(onPressed: () async { await Clipboard.setData(ClipboardData(text: '$name\\n\\n$text')); if (dialogContext.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم نسخ الدعاء'))); }, icon: const Icon(Icons.copy_rounded), label: const Text('نسخ')), TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('إغلاق'))])); }),
+            ListTile(
+              dense: true,
+              leading: Icon(duaTexts.containsKey(name) ? Icons.menu_book_rounded : Icons.library_books_outlined, color: duaTexts.containsKey(name) ? accentGold : Colors.white54, size: 19),
+              title: Text(name, style: const TextStyle(fontSize: 14)),
+              subtitle: Text(duaTexts.containsKey(name) ? 'النص الكامل متاح — اضغط للقراءة والنسخ' : 'ضمن الفهرس — النص الكامل قيد الإضافة والتوثيق', style: TextStyle(color: duaTexts.containsKey(name) ? accentGold : Colors.white38, fontSize: 11)),
+              onTap: () {
+                final text = duaTexts[name];
+                if (text == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('هذا النص بعده قيد المراجعة والتوثيق، ما أضفناه حتى نتجنب الأخطاء.')));
+                  return;
+                }
+                final source = duaSources[name] ?? 'مصدر النص يحتاج إلى مراجعة وتوثيق تفصيلي قبل اعتماد النسخة النهائية.';
+                showDialog<void>(
+                  context: context,
+                  builder: (dialogContext) => AlertDialog(
+                    backgroundColor: deepGreen,
+                    title: Text(name, style: const TextStyle(color: accentGold)),
+                    content: SizedBox(
+                      width: double.maxFinite,
+                      child: SingleChildScrollView(
+                        child: SelectableText('$text\n\nالمصدر: $source', style: const TextStyle(fontSize: 16, height: 2.0)),
+                      ),
+                    ),
+                    actions: [
+                      TextButton.icon(
+                        onPressed: () async {
+                          await Clipboard.setData(ClipboardData(text: '$name\n\n$text'));
+                          if (dialogContext.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم نسخ الدعاء')));
+                        },
+                        icon: const Icon(Icons.copy_rounded),
+                        label: const Text('نسخ'),
+                      ),
+                      TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('إغلاق')),
+                    ],
+                  ),
+                );
+              },
+            ),
         ])),
       if (filtered.isEmpty) const Padding(padding: EdgeInsets.all(24), child: Text('ما لكيت نتيجة بهذا الاسم.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white60))),
       const SizedBox(height: 12),
