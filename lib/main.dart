@@ -19,9 +19,9 @@ void main() async {
   runApp(const MithaqApp());
 }
 
-const deepGreen = Color(0xFF071F1A);
-const panelGreen = Color(0xFF10372E);
-const accentGold = Color(0xFFD9B66D);
+const deepGreen = Color(0xFF061A15);
+const panelGreen = Color(0xFF12382E);
+const accentGold = Color(0xFFCEB577);
 
 class MithaqApp extends StatelessWidget {
   const MithaqApp({super.key});
@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (context, i) => Container(
           width: 90, padding: const EdgeInsets.all(9),
           decoration: BoxDecoration(
-            color: prayers[i][0] == nextPrayer[0] ? const Color(0xFF17483A) : panelGreen,
+            color: prayers[i][0] == nextPrayer[0] ? const Color(0xFF1A493B) : panelGreen,
             borderRadius: BorderRadius.circular(17),
             border: Border.all(color: prayers[i][0] == nextPrayer[0] ? accentGold.withValues(alpha: .6) : Colors.white10),
           ),
@@ -247,7 +247,7 @@ class _HomePageState extends State<HomePage> {
       appBar: tab == 0 ? null : AppBar(title: Text(titles[tab])),
       body: SafeArea(child: IndexedStack(index: tab, children: pages)),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color(0xFF041610),
+        backgroundColor: const Color(0xFF051811),
         indicatorColor: accentGold.withValues(alpha: .18),
         selectedIndex: tab,
         onDestinationSelected: (value) => setState(() => tab = value),
@@ -394,7 +394,7 @@ class SurahPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 17),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
-              colors: [Color(0xFF17483A), Color(0xFF0B2921)],
+              colors: [Color(0xFF1A493B), Color(0xFF0D3026)],
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
             ),
@@ -450,7 +450,7 @@ class SurahPage extends StatelessWidget {
         Container(
           padding: const EdgeInsets.fromLTRB(18, 20, 18, 24),
           decoration: BoxDecoration(
-            color: const Color(0xFF0B2A22),
+            color: const Color(0xFF0D3026),
             borderRadius: BorderRadius.circular(18),
             border: Border.all(color: accentGold.withValues(alpha: .35)),
             boxShadow: [
@@ -567,7 +567,7 @@ class _AdhkarPageState extends State<AdhkarPage> {
                 itemBuilder: (context, i) => Padding(
                   padding: const EdgeInsets.only(bottom: 6),
                   child: Card(
-                    color: selected == i ? const Color(0xFF17483A) : panelGreen,
+                    color: selected == i ? const Color(0xFF1A493B) : panelGreen,
                     child: ListTile(
                       dense: true,
                       title: Text(adhkar[i]['title'] as String),
@@ -689,7 +689,7 @@ class _FatimaTasbihPageState extends State<FatimaTasbihPage> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
-                      color: i == stage ? const Color(0xFF17483A) : panelGreen,
+                      color: i == stage ? const Color(0xFF1A493B) : panelGreen,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: i == stage ? accentGold : Colors.white12),
                     ),
@@ -1109,7 +1109,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFF17483A), Color(0xFF0D2B24)],
+                colors: [Color(0xFF1A493B), Color(0xFF10352A)],
               ),
               borderRadius: BorderRadius.circular(22),
               border: Border.all(color: accentGold.withValues(alpha: .35)),
@@ -1435,7 +1435,7 @@ class HijriCalendarPage extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
-              gradient: const LinearGradient(colors: [Color(0xFF17483A), Color(0xFF0D2B24)]),
+              gradient: const LinearGradient(colors: [Color(0xFF1A493B), Color(0xFF10352A)]),
               border: Border.all(color: accentGold.withValues(alpha: .4)),
             ),
             child: Column(children: [
