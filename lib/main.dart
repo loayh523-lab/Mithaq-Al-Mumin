@@ -222,8 +222,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = <Widget>[home(), const QuranPage(), const FatimaTasbihPage(), const AdhkarPage(), const QiblaPage()];
-    const titles = ['الرئيسية', 'القرآن الكريم', 'تسبيح الزهراء عليها السلام', 'الأدعية والأذكار', 'اتجاه القبلة'];
+    final pages = <Widget>[home(), const QuranPage(), const FatimaTasbihPage(), const AdhkarPage(), const QiblaPage(), const ServicesHubPage()];
+    const titles = ['الرئيسية', 'القرآن الكريم', 'تسبيح الزهراء عليها السلام', 'الأدعية والأذكار', 'اتجاه القبلة', 'الخدمات'];
     return Scaffold(
       appBar: tab == 0 ? null : AppBar(title: Text(titles[tab])),
       body: SafeArea(child: IndexedStack(index: tab, children: pages)),
@@ -238,6 +238,7 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(icon: Icon(Icons.fingerprint), selectedIcon: Icon(Icons.fingerprint, color: accentGold), label: 'التسبيح'),
           NavigationDestination(icon: Icon(Icons.volunteer_activism_outlined), selectedIcon: Icon(Icons.volunteer_activism, color: accentGold), label: 'الأدعية'),
           NavigationDestination(icon: Icon(Icons.explore_outlined), selectedIcon: Icon(Icons.explore, color: accentGold), label: 'القبلة'),
+          NavigationDestination(icon: Icon(Icons.grid_view_rounded), selectedIcon: Icon(Icons.grid_view_rounded, color: accentGold), label: 'الخدمات'),
         ],
       ),
     );
@@ -1420,4 +1421,96 @@ class HijriCalendarPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class ServicesHubPage extends StatelessWidget {
+  const ServicesHubPage({super.key});
+  void _open(BuildContext context, Widget page, String title) {
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => Directionality(textDirection: TextDirection.rtl, child: Scaffold(appBar: AppBar(title: Text(title)), body: page))));
+  }
+  @override
+  Widget build(BuildContext context) {
+    final items = <_ServiceItem>[
+      _ServiceItem('مواقيت الصلاة', 'اختيار المدينة ومراجعة الأوقات', Icons.schedule_rounded, () => _open(context, const PrayerTimesPage(), 'مواقيت الصلاة')),
+      _ServiceItem('اتجاه القبلة', 'بوصلة لتحديد اتجاه الكعبة', Icons.explore_rounded, () => _open(context, const QiblaPage(), 'اتجاه القبلة')),
+      _ServiceItem('متابعة الختمة', 'احفظ تقدمك بقراءة القرآن', Icons.menu_book_rounded, () => _open(context, const KhatmaTrackerPage(), 'متابعة الختمة')),
+      _ServiceItem('عداد الركعات', 'سجّل الركعات التي أنجزتها', Icons.countertops_rounded, () => _open(context, const RakatsTrackerPage(), 'عداد الركعات')),
+      _ServiceItem('التقويم الهجري', 'مع تنبيه اختلاف التقويم', Icons.calendar_month_rounded, () => _open(context, const HijriInfoPage(), 'التقويم الهجري')),
+      _ServiceItem('دليل المناسبات', 'رمضان والأربعين والحج والزيارة', Icons.event_available_rounded, () => _open(context, const OccasionsPage(), 'دليل المناسبات')),
+    ];
+    return ListView(padding: const EdgeInsets.all(16), children: [
+      const Text('خدمات ميثاق المؤمن', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: accentGold)),
+      const SizedBox(height: 6), const Text('أدواتك اليومية للعبادة والمتابعة', style: TextStyle(color: Colors.white60)), const SizedBox(height: 18),
+      ...items.map((item) => Padding(padding: const EdgeInsets.only(bottom: 11), child: Material(color: panelGreen, borderRadius: BorderRadius.circular(18), child: InkWell(borderRadius: BorderRadius.circular(18), onTap: item.action, child: Padding(padding: const EdgeInsets.all(17), child: Row(children: [
+        Container(width: 48, height: 48, decoration: BoxDecoration(color: accentGold.withValues(alpha: .13), borderRadius: BorderRadius.circular(14)), child: Icon(item.icon, color: accentGold)), const SizedBox(width: 13),
+        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(item.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)), const SizedBox(height: 4), Text(item.subtitle, style: const TextStyle(color: Colors.white60, fontSize: 12))])),
+        const Icon(Icons.chevron_left_rounded, color: accentGold)
+      ]))))),
+      const SizedBox(height: 8), const Text('ملاحظة: مواقيت الصلاة والتاريخ الهجري قد يختلفان حسب التقويم والجهة الدينية المعتمدة؛ راجع المصدر المحلي عند الحاجة.', style: TextStyle(color: Colors.white54, height: 1.5, fontSize: 12)),
+    ]);
+  }
+}
+class _ServiceItem {
+  final String title, subtitle; final IconData icon; final VoidCallback action;
+  const _ServiceItem(this.title, this.subtitle, this.icon, this.action);
+}
+class RakatsTrackerPage extends StatefulWidget {
+  const RakatsTrackerPage({super.key});
+  @override State<RakatsTrackerPage> createState() => _RakatsTrackerPageState();
+}
+class _RakatsTrackerPageState extends State<RakatsTrackerPage> {
+  int count = 0;
+  String get _key => 'rakat_count_${DateTime.now().toIso8601String().substring(0,10)}';
+  @override void initState() { super.initState(); _load(); }
+  Future<void> _load() async { final p = await SharedPreferences.getInstance(); if (mounted) setState(() => count = p.getInt(_key) ?? 0); }
+  Future<void> _change(int delta) async { final next = math.max(0, count + delta); final p = await SharedPreferences.getInstance(); await p.setInt(_key, next); if (mounted) setState(() => count = next); }
+  @override Widget build(BuildContext context) => Center(child: Padding(padding: const EdgeInsets.all(24), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    const Icon(Icons.self_improvement_rounded, size: 66, color: accentGold), const SizedBox(height: 16), const Text('عداد الركعات', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
+    const SizedBox(height: 8), const Text('عداد شخصي للمتابعة فقط، وليس لتحديد صحة العبادة.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white60)), const SizedBox(height: 25),
+    Text('$count', style: const TextStyle(fontSize: 58, color: accentGold, fontWeight: FontWeight.bold)),
+    Row(mainAxisAlignment: MainAxisAlignment.center, children: [IconButton.filledTonal(onPressed: () => _change(-1), icon: const Icon(Icons.remove)), const SizedBox(width: 18), IconButton.filled(onPressed: () => _change(1), icon: const Icon(Icons.add))]),
+    TextButton(onPressed: () => _change(-count), child: const Text('تصفير عداد اليوم'))
+  ])));
+}
+class KhatmaTrackerPage extends StatefulWidget {
+  const KhatmaTrackerPage({super.key});
+  @override State<KhatmaTrackerPage> createState() => _KhatmaTrackerPageState();
+}
+class _KhatmaTrackerPageState extends State<KhatmaTrackerPage> {
+  int pages = 0; final int total = 604;
+  @override void initState() { super.initState(); _load(); }
+  Future<void> _load() async { final p = await SharedPreferences.getInstance(); if (mounted) setState(() => pages = p.getInt('khatma_pages') ?? 0); }
+  Future<void> _set(int v) async { final p = await SharedPreferences.getInstance(); final value = v.clamp(0, total); await p.setInt('khatma_pages', value); if (mounted) setState(() => pages = value); }
+  @override Widget build(BuildContext context) => ListView(padding: const EdgeInsets.all(22), children: [
+    const Icon(Icons.menu_book_rounded, size: 60, color: accentGold), const SizedBox(height: 16), const Text('متابعة ختمة القرآن', textAlign: TextAlign.center, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)), const SizedBox(height: 22),
+    LinearProgressIndicator(value: pages / total, minHeight: 10, color: accentGold, backgroundColor: panelGreen), const SizedBox(height: 14),
+    Text('$pages من $total صفحة', textAlign: TextAlign.center, style: const TextStyle(fontSize: 18)), Text('${(pages / total * 100).round()}٪ مكتمل', textAlign: TextAlign.center, style: const TextStyle(color: Colors.white60)), const SizedBox(height: 24),
+    Wrap(alignment: WrapAlignment.center, spacing: 8, runSpacing: 8, children: [for (final n in [1, 5, 10, 20]) OutlinedButton(onPressed: () => _set(pages + n), child: Text('+$n صفحات')), OutlinedButton(onPressed: () => _set(0), child: const Text('ختمة جديدة'))]),
+    const SizedBox(height: 12), const Text('عدد الصفحات تقديري وفق مصحف شائع من 604 صفحات.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white54, fontSize: 12))
+  ]);
+}
+class HijriInfoPage extends StatelessWidget {
+  const HijriInfoPage({super.key});
+  @override Widget build(BuildContext context) { final now = DateTime.now(); return Center(child: Padding(padding: const EdgeInsets.all(24), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    const Icon(Icons.calendar_month_rounded, size: 64, color: accentGold), const SizedBox(height: 18), const Text('التقويم الهجري', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)), const SizedBox(height: 12),
+    Text('التاريخ الميلادي: ${now.day}/${now.month}/${now.year}', style: const TextStyle(fontSize: 17)), const SizedBox(height: 12),
+    const Text('التاريخ الهجري يحتاج تقويماً موثوقاً أو إعلاناً شرعياً وقد يختلف يوماً بين البلدان. سنربطه بمصدر موثوق قبل عرضه كتاريخ معتمد.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white70, height: 1.7))
+  ]))); }
+}
+class OccasionsPage extends StatelessWidget {
+  const OccasionsPage({super.key});
+  @override Widget build(BuildContext context) => ListView(padding: const EdgeInsets.all(18), children: const [
+    Text('دليل المناسبات والزيارات', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: accentGold)), SizedBox(height: 14),
+    _OccasionCard(icon: Icons.nightlight_round, title: 'شهر رمضان', body: 'متابعة الصيام والقراءة والدعاء. راجع مواقيت الإمساك والإفطار وفق التقويم المحلي المعتمد.'),
+    _OccasionCard(icon: Icons.directions_walk_rounded, title: 'زيارة الأربعين', body: 'تهيّأ للزيارة بالدعاء وقراءة الزيارة المأثورة ومراعاة تعليمات السلامة والخدمات الرسمية على الطريق.'),
+    _OccasionCard(icon: Icons.mosque_rounded, title: 'الحج والعمرة', body: 'راجع المناسك والأحكام من مصدر فقهي موثوق قبل السفر، فبعض التفاصيل تختلف باختلاف المرجع.'),
+    _OccasionCard(icon: Icons.auto_stories_rounded, title: 'الزيارات والأعمال', body: 'أظهر مصدر كل نص ديني بوضوح عند إضافة النصوص للتطبيق.')
+  ]);
+}
+class _OccasionCard extends StatelessWidget {
+  final IconData icon; final String title, body;
+  const _OccasionCard({required this.icon, required this.title, required this.body});
+  @override Widget build(BuildContext context) => Card(color: panelGreen, margin: const EdgeInsets.only(bottom: 12), child: Padding(padding: const EdgeInsets.all(16), child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    Icon(icon, color: accentGold, size: 28), const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)), const SizedBox(height: 6), Text(body, style: const TextStyle(color: Colors.white70, height: 1.5))]))
+  ])));
 }
