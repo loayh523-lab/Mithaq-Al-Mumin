@@ -1652,7 +1652,7 @@ class _DuaLibraryPageState extends State<DuaLibraryPage> {
         const Text('هذه المكتبة تُقرأ من داخل التطبيق ولا تفتح مواقع خارجية. النصوص المتوفرة حالياً تُعرض دون إنترنت، ونعمل على إضافة بقية نصوص مفاتيح الجنان كاملةً مع توثيق مصادرها قبل اعتمادها.', style: TextStyle(color: Colors.white70, height: 1.6)),
       ]))),
       const SizedBox(height: 14),
-      TextField(controller: searchController      TextField(controller: searchController, onChanged: (value) => setState(() => query = value), decoration: InputDecoration(hintText: 'ابحث عن دعاء أو قسم...', prefixIcon: const Icon(Icons.search_rounded), suffixIcon: query.isEmpty ? null : IconButton(icon: const Icon(Icons.close), onPressed: () { searchController.clear(); setState(() => query = ''); }), border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)))),
+      TextField(controller: searchController, onChanged: (value) => setState(() => query = value), decoration: InputDecoration(hintText: 'ابحث عن دعاء أو قسم...', prefixIcon: const Icon(Icons.search_rounded), suffixIcon: query.isEmpty ? null : IconButton(icon: const Icon(Icons.close), onPressed: () { searchController.clear(); setState(() => query = ''); }), border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)))),
       const SizedBox(height: 12),
       for (final entry in filtered.entries)
         Card(color: panelGreen, margin: const EdgeInsets.only(bottom: 10), child: ExpansionTile(initiallyExpanded: query.trim().isNotEmpty, iconColor: accentGold, collapsedIconColor: accentGold, title: Text(entry.key, style: const TextStyle(color: accentGold, fontWeight: FontWeight.bold, fontSize: 16)), subtitle: Text('${entry.value.length} عنوان', style: const TextStyle(color: Colors.white54, fontSize: 12)), children: [
