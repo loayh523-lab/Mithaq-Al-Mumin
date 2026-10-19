@@ -992,7 +992,7 @@ class _ZiyaratTextPageState extends State<ZiyaratTextPage> {
                 min: 18,
                 max: 34,
                 divisions: 8,
-                activeColor: accentGold,
+                activeThumbColor: accentGold,
                 label: fontSize.round().toString(),
                 onChanged: (v) => setState(() => fontSize = v),
               ),
@@ -1980,7 +1980,7 @@ class _PrayerAlertsPageState extends State<PrayerAlertsPage> {
           final savedLon = prefs.getDouble('prayer_longitude');
           final hasGps = city == 'موقعي الحالي' && savedLat != null && savedLon != null;
           final coords = hasGps
-              ? Coordinates(savedLat!, savedLon!)
+              ? Coordinates(savedLat, savedLon)
               : (_PrayerTimesPageState.cities[city] ?? const Coordinates(31.8632, 46.0732));
           await PrayerNotificationService.schedulePrayerAlerts(city, coords, sound: sound);
           if (mounted) setState(() { enabled = true; message = 'تم إعداد تنبيهات الصلاة للأيام السبعة القادمة'; });
