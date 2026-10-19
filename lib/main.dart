@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adhan_dart/adhan_dart.dart';
 import 'package:flutter/services.dart';
@@ -107,31 +109,99 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class QuranPage extends StatelessWidget {
+class QuranPage extends StatefulWidget {
   const QuranPage({super.key});
-  static const surahs = <Surah>[
-    Surah('الفاتحة', 1, ['بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ','الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ','الرَّحْمَٰنِ الرَّحِيمِ','مَالِكِ يَوْمِ الدِّينِ','إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ','اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ','صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ']),
-    Surah('الإخلاص', 112, ['قُلْ هُوَ اللَّهُ أَحَدٌ','اللَّهُ الصَّمَدُ','لَمْ يَلِدْ وَلَمْ يُولَدْ','وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ']),
-    Surah('الفلق', 113, ['قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ','مِن شَرِّ مَا خَلَقَ','وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ','وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ','وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ']),
-    Surah('الناس', 114, ['قُلْ أَعُوذُ بِرَبِّ النَّاسِ','مَلِكِ النَّاسِ','إِلَٰهِ النَّاسِ','مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ','الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ','مِنَ الْجِنَّةِ وَالنَّاسِ']),
-  ];
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('القرآن الكريم')),
-    body: ListView(padding: const EdgeInsets.all(16), children: [
-      const Text('سور مختارة للقراءة', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 8),
-      const Text('بداية قسم القرآن. سيُستكمل فهرس المصحف بعد مراجعة النصوص.', style: TextStyle(color: Colors.white60)),
-      const SizedBox(height: 12),
-      ...surahs.map((s) => Card(color: panelGreen, child: ListTile(
-        leading: CircleAvatar(backgroundColor: deepGreen, child: Text(s.number.toString(), style: const TextStyle(color: accentGold))),
-        title: Text('سورة ' + s.name),
-        subtitle: Text(s.verses.length.toString() + ' آيات'),
-        trailing: const Icon(Icons.chevron_left, color: accentGold),
-        onTap: () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => SurahPage(surah: s))),
-      ))),
-    ]),
-  );
+  State<QuranPage> createState() => _QuranPageState();
+}
+
+class _QuranPageState extends State<QuranPage> {
+  List<Surah> surahs = [];
+  bool loading = true;
+  String? error;
+  String query = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadQuran();
+  }
+
+  Future<void> _loadQuran() async {
+    try {
+      final raw = await rootBundle.loadString('assets/quran/quran-uthmani.json');
+      final decoded = jsonDecode(raw) as Map<String, dynamic>;
+      final rows = decoded['surahs'] as List<dynamic>;
+      final loaded = rows.map((row) {
+        final item = row as Map<String, dynamic>;
+        final ayahs = (item['ayahs'] as List<dynamic>)
+            .where((a) => ((a as Map<String, dynamic>)['number'] as num).toInt() > 0)
+            .map((a) => (a as Map<String, dynamic>)['text'] as String)
+            .toList(growable: false);
+        return Surah(item['name'] as String, (item['number'] as num).toInt(), ayahs);
+      }).toList(growable: false);
+      if (loaded.length != 114) throw const FormatException('عدد السور غير مكتمل');
+      if (!mounted) return;
+      setState(() { surahs = loaded; loading = false; });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() { loading = false; error = 'تعذر تحميل ملف القرآن المضمّن. أعد بناء التطبيق بعد تنزيل ملف المصدر.'; });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final filtered = surahs.where((s) => s.name.contains(query.trim()) || s.number.toString() == query.trim()).toList();
+    return Scaffold(
+      appBar: AppBar(title: const Text('القرآن الكريم')),
+      body: loading
+          ? const Center(child: CircularProgressIndicator())
+          : error != null
+              ? Center(child: Padding(padding: const EdgeInsets.all(24), child: Text(error!, textAlign: TextAlign.center)))
+              : Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                    child: TextField(
+                      onChanged: (v) => setState(() => query = v),
+                      decoration: InputDecoration(
+                        hintText: 'ابحث عن سورة أو رقمها',
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: panelGreen,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text('النص العثماني من مشروع تنزيل Tanzil. يعمل ملف القرآن دون إنترنت بعد تثبيت التطبيق.',
+                      style: TextStyle(color: Colors.white60, height: 1.5)),
+                  ),
+                  Expanded(child: ListView.builder(
+                    itemCount: filtered.length,
+                    itemBuilder: (context, index) {
+                      final s = filtered[index];
+                      return Card(
+                        color: panelGreen,
+                        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        child: ListTile(
+                          leading: CircleAvatar(backgroundColor: deepGreen, child: Text(s.number.toString(), style: const TextStyle(color: accentGold))),
+                          title: Text('سورة ' + s.name),
+                          subtitle: Text(s.verses.length.toString() + ' آيات'),
+                          trailing: const Icon(Icons.chevron_left, color: accentGold),
+                          onTap: () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => SurahPage(surah: s))),
+                        ),
+                      );
+                    },
+                  )),
+                  const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text('المصدر: Tanzil.net — CC BY 3.0', style: TextStyle(fontSize: 11, color: Colors.white38)),
+                  ),
+                ]),
+    );
+  }
 }
 
 class Surah {
