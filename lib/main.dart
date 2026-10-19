@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
@@ -35,6 +36,47 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int tab = 0;
+  String homeCity = 'قلعة سكر';
+  Timer? _clockTimer;
+
+  static const homeCities = <String, Coordinates>{
+    'قلعة سكر': Coordinates(31.8632, 46.0732),
+    'الناصرية': Coordinates(31.05799, 46.25726),
+    'بغداد': Coordinates(33.3152, 44.3661),
+    'النجف': Coordinates(32.0003, 44.3354),
+    'كربلاء': Coordinates(32.616, 44.024),
+    'البصرة': Coordinates(30.5085, 47.7804),
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHomeCity();
+    _clockTimer = Timer.periodic(const Duration(minutes: 1), (_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _clockTimer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _loadHomeCity() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getString('selected_city');
+    if (!mounted) return;
+    if (saved != null && homeCities.containsKey(saved)) {
+      setState(() => homeCity = saved);
+    }
+  }
+
+  String _homeTime(DateTime value) {
+    final local = value.toLocal();
+    final hour = local.hour % 12 == 0 ? 12 : local.hour % 12;
+    return '$hour:${local.minute.toString().padLeft(2, '0')} ${local.hour >= 12 ? 'م' : 'ص'}';
+  }
   void open(Widget page) => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => page));
 
   Widget glass(Widget child, {EdgeInsets padding = const EdgeInsets.all(16)}) => Container(
@@ -48,13 +90,25 @@ class _HomePageState extends State<HomePage> {
   );
 
   Widget home() {
-    const prayers = <List<Object>>[
-      ['الفجر', '04:35', Icons.wb_twilight],
-      ['الشروق', '05:58', Icons.wb_sunny_outlined],
-      ['الظهر', '12:02', Icons.wb_sunny],
-      ['العصر', '15:25', Icons.sunny],
-      ['المغرب', '18:06', Icons.nights_stay_outlined],
+    final now = DateTime.now();
+    final calculated = PrayerTimes(
+      coordinates: homeCities[homeCity]!,
+      date: now,
+      calculationParameters: CalculationMethodParameters.jafari(),
+    );
+    final prayerRows = <List<Object>>[
+      ['الفجر', calculated.fajr, Icons.wb_twilight],
+      ['الشروق', calculated.sunrise, Icons.wb_sunny_outlined],
+      ['الظهر', calculated.dhuhr, Icons.wb_sunny],
+      ['العصر', calculated.asr, Icons.sunny],
+      ['المغرب', calculated.maghrib, Icons.nights_stay_outlined],
+      ['العشاء', calculated.isha, Icons.nights_stay],
     ];
+    final upcoming = prayerRows
+        .where((row) => row[0] != 'الشروق' && (row[1] as DateTime).isAfter(now))
+        .toList();
+    final nextPrayer = upcoming.isNotEmpty ? upcoming.first : prayerRows.first;
+    final prayers = prayerRows;
     return ListView(padding: const EdgeInsets.fromLTRB(16, 12, 16, 24), children: [
       glass(Row(children: [
         SizedBox(width: 54, height: 54, child: SvgPicture.asset('assets/logo.svg')),
@@ -70,10 +124,13 @@ class _HomePageState extends State<HomePage> {
       Row(children: [
         const Icon(Icons.location_on_outlined, color: accentGold, size: 17),
         const SizedBox(width: 4),
-        const Expanded(child: Text('قلعة سكر، ذي قار', style: TextStyle(color: Colors.white70, fontSize: 12))),
+        Expanded(child: InkWell(
+          onTap: () => open(const PrayerTimesPage()),
+          child: Text('$homeCity، تغيير المدينة', style: const TextStyle(color: Colors.white70, fontSize: 12)),
+        )),
         const Icon(Icons.calendar_month_outlined, color: accentGold, size: 17),
         const SizedBox(width: 5),
-        Text('${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year} م', style: const TextStyle(color: Colors.white70, fontSize: 12)),
+        Text('${now.day}/${now.month}/${now.year} م', style: const TextStyle(color: Colors.white70, fontSize: 12)),
       ]),
       const SizedBox(height: 20),
       glass(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -85,9 +142,9 @@ class _HomePageState extends State<HomePage> {
           Icon(Icons.mosque_outlined, color: accentGold),
         ]),
         const SizedBox(height: 12),
-        const Text('صلاة الظهر', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+        Text('صلاة ${nextPrayer[0]} — ${_homeTime(nextPrayer[1] as DateTime)}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         const SizedBox(height: 5),
-        const Text('اللهم اجعلنا من مقيمي الصلاة', style: TextStyle(color: Colors.white60, fontSize: 13)),
+        Text('المواقيت المحسوبة لمدينة $homeCity', style: const TextStyle(color: Colors.white60, fontSize: 13)),
         const SizedBox(height: 15),
         SizedBox(width: double.infinity, child: FilledButton(
           onPressed: () => open(const PrayerTimesPage()),
@@ -104,16 +161,16 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (context, i) => Container(
           width: 90, padding: const EdgeInsets.all(9),
           decoration: BoxDecoration(
-            color: i == 2 ? const Color(0xFF17483A) : panelGreen,
+            color: prayers[i][0] == nextPrayer[0] ? const Color(0xFF17483A) : panelGreen,
             borderRadius: BorderRadius.circular(17),
-            border: Border.all(color: i == 2 ? accentGold.withValues(alpha: .6) : Colors.white10),
+            border: Border.all(color: prayers[i][0] == nextPrayer[0] ? accentGold.withValues(alpha: .6) : Colors.white10),
           ),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Icon(prayers[i][2] as IconData, color: accentGold, size: 20),
             const SizedBox(height: 5),
             Text(prayers[i][0] as String, style: const TextStyle(fontSize: 12)),
             const SizedBox(height: 3),
-            Text(prayers[i][1] as String, style: const TextStyle(color: accentGold, fontWeight: FontWeight.bold, fontSize: 12)),
+            Text(_homeTime(prayers[i][1] as DateTime), style: const TextStyle(color: accentGold, fontWeight: FontWeight.bold, fontSize: 12)),
           ]),
         ),
       )),
