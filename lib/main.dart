@@ -223,12 +223,19 @@ class SurahPage extends StatelessWidget {
     body: ListView(padding: const EdgeInsets.all(22), children: [
       Center(child: Text('سورة ' + surah.name, style: const TextStyle(color: accentGold, fontSize: 24, fontWeight: FontWeight.bold))),
       const SizedBox(height: 24),
+      if (surah.number != 1 && surah.number != 9)
+        const Padding(
+          padding: EdgeInsets.only(bottom: 18),
+          child: Text('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: accentGold, fontSize: 25, height: 1.8)),
+        ),
       Container(padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(color: panelGreen, borderRadius: BorderRadius.circular(22), border: Border.all(color: accentGold.withValues(alpha: .25))),
         child: Text(surah.verses.asMap().entries.map((e) => e.value + '  ﴿' + (e.key + 1).toString() + '﴾').join('\n\n'),
           textAlign: TextAlign.center, style: const TextStyle(fontSize: 25, height: 2.1))),
       const SizedBox(height: 16),
-      const Text('هذه نسخة أولية بسور مختارة؛ يجب مراجعة الرسم والوقف قبل اعتماد المصحف الكامل.',
+      const Text('النص العثماني: مشروع تنزيل Tanzil. أُبقي النص كما ورد في المصدر؛ قد تختلف علامات العرض عن مصحفك المطبوع.',
         style: TextStyle(color: Colors.white54, fontSize: 12, height: 1.5)),
     ]),
   );
