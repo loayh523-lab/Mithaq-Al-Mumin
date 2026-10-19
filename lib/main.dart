@@ -1441,11 +1441,34 @@ class ServicesHubPage extends StatelessWidget {
     return ListView(padding: const EdgeInsets.all(16), children: [
       const Text('خدمات ميثاق المؤمن', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: accentGold)),
       const SizedBox(height: 6), const Text('أدواتك اليومية للعبادة والمتابعة', style: TextStyle(color: Colors.white60)), const SizedBox(height: 18),
-      ...items.map((item) => Padding(padding: const EdgeInsets.only(bottom: 11), child: Material(color: panelGreen, borderRadius: BorderRadius.circular(18), child: InkWell(borderRadius: BorderRadius.circular(18), onTap: item.action, child: Padding(padding: const EdgeInsets.all(17), child: Row(children: [
-        Container(width: 48, height: 48, decoration: BoxDecoration(color: accentGold.withValues(alpha: .13), borderRadius: BorderRadius.circular(14)), child: Icon(item.icon, color: accentGold)), const SizedBox(width: 13),
-        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(item.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)), const SizedBox(height: 4), Text(item.subtitle, style: const TextStyle(color: Colors.white60, fontSize: 12))])),
-        const Icon(Icons.chevron_left_rounded, color: accentGold)
-      ]))))),
+      ...items.map((item) => Padding(
+        padding: const EdgeInsets.only(bottom: 11),
+        child: Material(
+          color: panelGreen,
+          borderRadius: BorderRadius.circular(18),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(18),
+            onTap: item.action,
+            child: Padding(
+              padding: const EdgeInsets.all(17),
+              child: Row(children: [
+                Container(
+                  width: 48, height: 48,
+                  decoration: BoxDecoration(color: accentGold.withValues(alpha: .13), borderRadius: BorderRadius.circular(14)),
+                  child: Icon(item.icon, color: accentGold),
+                ),
+                const SizedBox(width: 13),
+                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(item.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  const SizedBox(height: 4),
+                  Text(item.subtitle, style: const TextStyle(color: Colors.white60, fontSize: 12)),
+                ])),
+                const Icon(Icons.chevron_left_rounded, color: accentGold),
+              ]),
+            ),
+          ),
+        ),
+      )),
       const SizedBox(height: 8), const Text('ملاحظة: مواقيت الصلاة والتاريخ الهجري قد يختلفان حسب التقويم والجهة الدينية المعتمدة؛ راجع المصدر المحلي عند الحاجة.', style: TextStyle(color: Colors.white54, height: 1.5, fontSize: 12)),
     ]);
   }
