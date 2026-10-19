@@ -1653,6 +1653,7 @@ class _DuaLibraryPageState extends State<DuaLibraryPage> {
   String query = '';
   Map<String, String> duaTexts = verifiedDuaTexts;
   Map<String, String> duaSources = {};
+  Map<String, List<String>> loadedGroups = {};
 
   @override
   void initState() {
@@ -1666,10 +1667,23 @@ class _DuaLibraryPageState extends State<DuaLibraryPage> {
       final data = jsonDecode(raw) as Map<String, dynamic>;
       final rawTexts = data['texts'] as Map<String, dynamic>? ?? {};
       final rawSources = data['sources'] as Map<String, dynamic>? ?? {};
+      final rawSections = data['sections'] as List<dynamic>? ?? [];
+      final parsedGroups = <String, List<String>>{};
+      for (final rawSection in rawSections) {
+        if (rawSection is! Map<String, dynamic>) continue;
+        final sectionName = rawSection['name']?.toString();
+        final rawItems = rawSection['items'] as List<dynamic>? ?? [];
+        if (sectionName == null) continue;
+        parsedGroups[sectionName] = rawItems.map((item) {
+          if (item is Map<String, dynamic>) return item['title']?.toString() ?? '';
+          return item.toString();
+        }).where((title) => title.isNotEmpty).toList(growable: false);
+      }
       if (!mounted) return;
       setState(() {
-        duaTexts = rawTexts.map((key, value) => MapEntry(key, value.toString()));
+        duaTexts = {...verifiedDuaTexts, ...rawTexts.map((key, value) => MapEntry(key, value.toString()))};
         duaSources = rawSources.map((key, value) => MapEntry(key, value.toString()));
+        loadedGroups = parsedGroups;
       });
     } catch (_) {
       // Keep built-in fallback texts available if the asset cannot be read.
@@ -1679,8 +1693,11 @@ class _DuaLibraryPageState extends State<DuaLibraryPage> {
   @override void dispose() { searchController.dispose(); super.dispose(); }
   @override Widget build(BuildContext context) {
     final filtered = <String, List<String>>{};
-    for (final entry in groups.entries) {
-      final names = entry.value.split('|').where((name) => query.trim().isEmpty || name.contains(query.trim()) || entry.key.contains(query.trim())).toList();
+    final sourceGroups = loadedGroups.isNotEmpty
+        ? loadedGroups
+        : groups.map((key, value) => MapEntry(key, value.split('|')));
+    for (final entry in sourceGroups.entries) {
+      final names = entry.value.where((name) => query.trim().isEmpty || name.contains(query.trim()) || entry.key.contains(query.trim())).toList();
       if (names.isNotEmpty) filtered[entry.key] = names;
     }
     return ListView(padding: const EdgeInsets.all(16), children: [
