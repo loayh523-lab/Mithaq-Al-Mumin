@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:adhan_dart/adhan_dart.dart';
@@ -1649,7 +1650,40 @@ class _PrayerAlertsPageState extends State<PrayerAlertsPage> {
   bool enabled = false;
   bool sound = true;
   bool busy = false;
+  bool usingLocation = false;
   String message = 'التنبيهات غير مفعّلة';
+
+  Future<void> _useCurrentLocation() async {
+    setState(() { busy = true; message = 'جارٍ تحديد الموقع...'; });
+    try {
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        if (mounted) setState(() => message = 'شغّل خدمة الموقع GPS من إعدادات الهاتف ثم أعد المحاولة');
+        return;
+      }
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        if (mounted) setState(() => message = 'إذن الموقع مرفوض؛ اسمح للتطبيق باستخدام الموقع من إعدادات الهاتف');
+        return;
+      }
+      final position = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, timeLimit: Duration(seconds: 20)),
+      );
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble('prayer_latitude', position.latitude);
+      await prefs.setDouble('prayer_longitude', position.longitude);
+      await prefs.setString('selected_city', 'موقعي الحالي');
+      if (mounted) setState(() { usingLocation = true; message = 'تم حفظ موقعك؛ فعّل التنبيهات لتُحسب على إحداثياتك'; });
+    } catch (_) {
+      if (mounted) setState(() => message = 'ما كدرنا نحدد الموقع. تأكد من GPS والإنترنت وحاول مجددًا');
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
   Future<void> _toggle(bool value) async {
     setState(() { busy = true; });
     try {
@@ -1663,7 +1697,12 @@ class _PrayerAlertsPageState extends State<PrayerAlertsPage> {
         } else {
           final prefs = await SharedPreferences.getInstance();
           final city = prefs.getString('selected_city') ?? 'قلعة سكر';
-          final coords = _PrayerTimesPageState.cities[city] ?? const Coordinates(31.8632, 46.0732);
+          final savedLat = prefs.getDouble('prayer_latitude');
+          final savedLon = prefs.getDouble('prayer_longitude');
+          final hasGps = city == 'موقعي الحالي' && savedLat != null && savedLon != null;
+          final coords = hasGps
+              ? Coordinates(savedLat!, savedLon!)
+              : (_PrayerTimesPageState.cities[city] ?? const Coordinates(31.8632, 46.0732));
           await PrayerNotificationService.schedulePrayerAlerts(city, coords, sound: sound);
           if (mounted) setState(() { enabled = true; message = 'تم إعداد تنبيهات الصلاة للأيام السبعة القادمة'; });
         }
@@ -1680,7 +1719,15 @@ class _PrayerAlertsPageState extends State<PrayerAlertsPage> {
     const Text('تنبيهات الصلاة', textAlign: TextAlign.center, style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
     const SizedBox(height: 8),
     const Text('تُحسب الأوقات بالطريقة الجعفرية للمدينة المحفوظة. أعد تفعيل التنبيهات بعد تغيير المدينة أو إذا تغيّر التوقيت.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white60, height: 1.6)),
-    const SizedBox(height: 22),
+    const SizedBox(height: 16),
+    OutlinedButton.icon(
+      onPressed: busy ? null : _useCurrentLocation,
+      icon: const Icon(Icons.my_location_rounded),
+      label: Text(busy ? 'جارٍ العمل...' : usingLocation ? 'تم حفظ موقعي' : 'استخدام موقعي الحالي GPS'),
+    ),
+    const SizedBox(height: 6),
+    const Text('يحتاج إذن الموقع وتشغيل GPS. إذا لم تستخدمه، يعتمد التطبيق على المدينة المختارة.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white54, height: 1.5)),
+    const SizedBox(height: 16),
     SwitchListTile(value: sound, onChanged: (v) => setState(() => sound = v), title: const Text('صوت تنبيه'), subtitle: const Text('صوت إشعار النظام؛ ملف الأذان الكامل يحتاج إضافته منفصلاً'), activeColor: accentGold),
     const SizedBox(height: 12),
     FilledButton.icon(onPressed: busy ? null : () => _toggle(!enabled), icon: Icon(enabled ? Icons.notifications_off : Icons.notifications_active), label: Text(busy ? 'جارٍ الإعداد...' : enabled ? 'إيقاف التنبيهات' : 'تفعيل تنبيهات الصلاة')),
