@@ -53,6 +53,13 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Generate launcher icon from official logo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin
+          rsvg-convert -w 512 -h 512 assets/logo.svg -o assets/logo.png
+          dart run flutter_launcher_icons
+
       - name: Build release APK
         run: flutter build apk --release
 
