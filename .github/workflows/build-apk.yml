@@ -50,7 +50,7 @@ jobs:
               raise SystemExit('Android manifest application tag not found')
           missing = [x for x in permissions if x.split('"')[1] not in s]
           if missing:
-              s = s.replace(marker, '\\n'.join(missing) + '\\n' + marker, 1)
+              s = s.replace(marker, '\n'.join(missing) + '\n' + marker, 1)
               p.write_text(s)
           PY
 
