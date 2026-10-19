@@ -7,6 +7,385 @@
   "monologues_source_url": "https://imamzain.org/library/al-sahifa/imam-monologues",
   "sahifa_count": 54,
   "monologues_count": 15,
-  "items": [],
+  "items": [
+    {
+      "number": 1,
+      "title": "دعاؤه في التحميد لله عز وجل",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 2,
+      "title": "دعاؤه في الصلاة على محمد وآله",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 3,
+      "title": "دعاؤه في الصلاة على حملة العرش",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 4,
+      "title": "دعاؤه في الصلاة على مصدقي الرسل",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 5,
+      "title": "دعاؤه لنفسه وخاصته",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 6,
+      "title": "دعاؤه عند الصباح والمساء",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 7,
+      "title": "دعاؤه في المهمات",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 8,
+      "title": "دعاؤه في الاستعاذة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 9,
+      "title": "دعاؤه في الاشتياق إلى طلب المغفرة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 10,
+      "title": "دعاؤه في اللجأ إلى الله تعالى",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 11,
+      "title": "دعاؤه بخواتيم الخير",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 12,
+      "title": "دعاؤه في الاعتراف وطلب التوبة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 13,
+      "title": "دعاؤه في طلب الحوائج إلى الله تعالى",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 14,
+      "title": "دعاؤه في الظلامات",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 15,
+      "title": "دعاؤه عند المرض",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 16,
+      "title": "دعاؤه في الاستقالة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 17,
+      "title": "دعاؤه على الشيطان",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 18,
+      "title": "دعاؤه في المحذورات",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 19,
+      "title": "دعاؤه عند الاستسقاء",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 20,
+      "title": "دعاؤه في مكارم الأخلاق",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 21,
+      "title": "دعاؤه إذا حزنه أمر",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 22,
+      "title": "دعاؤه عند الشدة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 23,
+      "title": "دعاؤه بالعافية",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 24,
+      "title": "دعاؤه لأبويه",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 25,
+      "title": "دعاؤه لولده",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 26,
+      "title": "دعاؤه لجيرانه وأوليائه",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 27,
+      "title": "دعاؤه لأهل الثغور",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 28,
+      "title": "دعاؤه متفزعاً إلى الله تعالى",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 29,
+      "title": "دعاؤه إذا قتر عليه الرزق",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 30,
+      "title": "دعاؤه في المعونة على قضاء الدين",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 31,
+      "title": "دعاؤه في طلب التوبة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 32,
+      "title": "دعاؤه بعد صلاة الليل لنفسه",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 33,
+      "title": "دعاؤه في الاستخارة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 34,
+      "title": "دعاؤه إذا رأى مبتلى بفضيحة بذنب",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 35,
+      "title": "دعاؤه في الرضا بالقضاء",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 36,
+      "title": "دعاؤه عند سماع الرعد",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 37,
+      "title": "دعاؤه في الشكر لله تعالى",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 38,
+      "title": "دعاؤه في الاعتذار",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 39,
+      "title": "دعاؤه في طلب العفو والرحمة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 40,
+      "title": "دعاؤه عند ذكر الموت",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 41,
+      "title": "دعاؤه في طلب الستر والوقاية",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 42,
+      "title": "دعاؤه عند ختم القرآن",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 43,
+      "title": "دعاؤه إذا نظر إلى الهلال",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 44,
+      "title": "دعاؤه لدخول شهر رمضان",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 45,
+      "title": "دعاؤه لوداع شهر رمضان",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 46,
+      "title": "دعاؤه للعيد والفطر والجمعة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 47,
+      "title": "دعاؤه في يوم عرفة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 48,
+      "title": "دعاؤه يوم الأضحى ويوم الجمعة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 49,
+      "title": "دعاؤه في دفاع كيد الأعداء",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 50,
+      "title": "دعاؤه في الرهبة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 51,
+      "title": "دعاؤه في التضرع والاستكانة",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 52,
+      "title": "دعاؤه في الإلحاح على الله",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 53,
+      "title": "دعاؤه في التذلل لله",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    },
+    {
+      "number": 54,
+      "title": "دعاؤه في استكشاف الهموم",
+      "kind": "index",
+      "offline_text_available": false,
+      "source_url": "https://imamzain.org/library/al-sahifa/al-sahifa-al-sajjadiya-index"
+    }
+  ],
   "note": "فهرس المصدر محفوظ هنا للتنظيم. تُضاف النصوص الكاملة بعد جلب كل صفحة ومراجعة سلامة النص؛ لا تعتبر الأعداد دليلاً على أن النصوص موجودة محلياً بعد."
 }
