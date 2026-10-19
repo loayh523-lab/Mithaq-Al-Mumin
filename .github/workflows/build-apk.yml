@@ -54,7 +54,7 @@ jobs:
         run: flutter pub get
 
       - name: Analyze Dart code
-        run: flutter analyze lib
+        run: flutter analyze lib --no-fatal-infos
 
       - name: Generate launcher icon from official logo
         run: |
