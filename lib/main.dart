@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'app/app_theme.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,9 +20,6 @@ void main() async {
   runApp(const MithaqApp());
 }
 
-const deepGreen = Color(0xFF061A15);
-const panelGreen = Color(0xFF12382E);
-const accentGold = Color(0xFFCEB577);
 
 class MithaqApp extends StatelessWidget {
   const MithaqApp({super.key});
@@ -29,9 +27,7 @@ class MithaqApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'ميثاق المؤمن',
-    theme: ThemeData(useMaterial3: true, brightness: Brightness.dark,
-      scaffoldBackgroundColor: deepGreen,
-      colorScheme: ColorScheme.fromSeed(seedColor: accentGold, brightness: Brightness.dark)),
+    theme: AppTheme.dark,
     home: const Directionality(textDirection: TextDirection.rtl, child: HomePage()),
   );
 }
