@@ -33,6 +33,27 @@ jobs:
             flutter create --platforms=android --project-name mithaq_al_mumin --org com.mithaqalmumin .
           fi
 
+      - name: Configure Android notification and location permissions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('android/app/src/main/AndroidManifest.xml')
+          s = p.read_text()
+          permissions = [
+              '  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>',
+              '  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>',
+              '  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>',
+              '  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>',
+          ]
+          marker = '  <application'
+          if marker not in s:
+              raise SystemExit('Android manifest application tag not found')
+          missing = [x for x in permissions if x.split('"')[1] not in s]
+          if missing:
+              s = s.replace(marker, '\\n'.join(missing) + '\\n' + marker, 1)
+              p.write_text(s)
+          PY
+
       - name: Download verified Uthmani Quran data
         run: |
           mkdir -p assets/quran
