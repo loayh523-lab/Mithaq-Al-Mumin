@@ -79,6 +79,8 @@ jobs:
           missing = [x for x in permissions if x.split('"')[1] not in s]
           if missing:
               s = s.replace(marker, '\n'.join(missing) + '\n' + marker, 1)
+          if label_count or missing:
+              p.write_text(s)
 
           PY
 
