@@ -538,7 +538,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 const Text('مواقيت اليوم', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 6),
                 Text(
-                  '\${DateTime.now().year}/\${DateTime.now().month}/\${DateTime.now().day}',
+                  '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}',
                   style: const TextStyle(color: Colors.white70),
                 ),
                 const SizedBox(height: 16),
@@ -672,7 +672,7 @@ class _QiblaPageState extends State<QiblaPage> {
           const SizedBox(height: 18),
           Center(
             child: Text(
-              '\${angle.toStringAsFixed(1)}° من الشمال باتجاه عقارب الساعة',
+              '${angle.toStringAsFixed(1)}° من الشمال باتجاه عقارب الساعة',
               textAlign: TextAlign.center,
               style: const TextStyle(color: accentGold, fontSize: 20, fontWeight: FontWeight.bold),
             ),
