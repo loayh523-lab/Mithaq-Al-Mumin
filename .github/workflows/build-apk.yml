@@ -53,6 +53,9 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Analyze Dart code
+        run: flutter analyze
+
       - name: Generate launcher icon from official logo
         run: |
           sudo apt-get update
