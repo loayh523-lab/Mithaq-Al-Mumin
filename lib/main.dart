@@ -292,37 +292,133 @@ class Surah {
 class SurahPage extends StatelessWidget {
   const SurahPage({super.key, required this.surah});
   final Surah surah;
+
+  Widget ornamentLine() => Row(
+    children: [
+      const Expanded(child: Divider(color: accentGold, thickness: .7)),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Icon(Icons.auto_awesome, color: accentGold.withValues(alpha: .8), size: 17),
+      ),
+      const Expanded(child: Divider(color: accentGold, thickness: .7)),
+    ],
+  );
+
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text('سورة ' + surah.name)),
-    body: ListView(padding: const EdgeInsets.all(22), children: [
-      Center(child: Text('سورة ' + surah.name, style: const TextStyle(color: accentGold, fontSize: 24, fontWeight: FontWeight.bold))),
-      const SizedBox(height: 24),
-      if (surah.number != 1 && surah.number != 9)
-        const Padding(
-          padding: EdgeInsets.only(bottom: 18),
-          child: Text('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: accentGold, fontSize: 25, height: 1.8)),
-        ),
-      Container(padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(color: panelGreen, borderRadius: BorderRadius.circular(22), border: Border.all(color: accentGold.withValues(alpha: .25))),
-        child: Column(children: [
-          for (var i = 0; i < surah.verses.length; i++)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 7),
-              child: Text(
-                '${surah.verses[i]}  ﴿${i + 1}﴾',
+    appBar: AppBar(
+      title: Text('سورة ${surah.name}'),
+      centerTitle: true,
+    ),
+    body: ListView(
+      padding: const EdgeInsets.fromLTRB(16, 18, 16, 30),
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 17),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF17483A), Color(0xFF0B2921)],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: accentGold.withValues(alpha: .7), width: 1.2),
+          ),
+          child: Column(
+            children: [
+              ornamentLine(),
+              const SizedBox(height: 10),
+              Text(
+                'سُورَةُ ${surah.name}',
                 textAlign: TextAlign.center,
-                textDirection: TextDirection.rtl,
-                style: const TextStyle(fontSize: 25, height: 2.0),
+                style: const TextStyle(
+                  color: accentGold,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  height: 1.6,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                'عدد الآيات: ${surah.verses.length}',
+                style: const TextStyle(color: Colors.white70, fontSize: 12),
+              ),
+              const SizedBox(height: 10),
+              ornamentLine(),
+            ],
+          ),
+        ),
+        const SizedBox(height: 18),
+        if (surah.number != 1 && surah.number != 9)
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+            margin: const EdgeInsets.only(bottom: 15),
+            decoration: BoxDecoration(
+              color: panelGreen.withValues(alpha: .55),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: accentGold.withValues(alpha: .18)),
+            ),
+            child: const Text(
+              'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+              textAlign: TextAlign.center,
+              textDirection: TextDirection.rtl,
+              style: TextStyle(
+                color: accentGold,
+                fontSize: 27,
+                height: 2,
+                fontFamily: 'serif',
               ),
             ),
-        ])),
-      const SizedBox(height: 16),
-      const Text('النص العثماني: مشروع تنزيل Tanzil. أُبقي النص كما ورد في المصدر؛ قد تختلف علامات العرض عن مصحفك المطبوع.',
-        style: TextStyle(color: Colors.white54, fontSize: 12, height: 1.5)),
-    ]),
+          ),
+        Container(
+          padding: const EdgeInsets.fromLTRB(18, 20, 18, 24),
+          decoration: BoxDecoration(
+            color: const Color(0xFF0B2A22),
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: accentGold.withValues(alpha: .35)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: .12),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              for (var i = 0; i < surah.verses.length; i++) ...[
+                if (i > 0)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3),
+                    child: Text(
+                      '۞',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: accentGold.withValues(alpha: .8), fontSize: 17),
+                    ),
+                  ),
+                SelectableText(
+                  '${surah.verses[i]} ﴿${i + 1}﴾',
+                  textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    height: 2.15,
+                    fontFamily: 'serif',
+                    color: Color(0xFFF8F0DC),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(height: 14),
+        const Text(
+          'النص العثماني من مشروع تنزيل Tanzil. الزخرفة لتنسيق العرض فقط، ويُرجى مراجعة النص مع مصحف موثوق.',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white54, fontSize: 12, height: 1.6),
+        ),
+      ],
+    ),
   );
 }
 
