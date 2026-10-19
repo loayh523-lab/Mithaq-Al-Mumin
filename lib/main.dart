@@ -514,6 +514,10 @@ class _AdhkarPageState extends State<AdhkarPage> {
     {'title': 'ذكر يونُس عليه السلام', 'text': 'لا إله إلا أنت سبحانك إني كنت من الظالمين', 'target': 100},
     {'title': 'الحوقلة', 'text': 'لا حول ولا قوة إلا بالله العلي العظيم', 'target': 100},
     {'title': 'دعاء الفرج', 'text': 'اللهم كن لوليك الحجة بن الحسن صلواتك عليه وعلى آبائه', 'target': 100},
+    {'title': 'التسبيح بعد الصلاة', 'text': 'سبحان الله والحمد لله ولا إله إلا الله والله أكبر', 'target': 30},
+    {'title': 'طلب المغفرة', 'text': 'أستغفر الله الذي لا إله إلا هو الحي القيوم ذو الجلال والإكرام وأتوب إليه', 'target': 70},
+    {'title': 'الصلاة على النبي وآله', 'text': 'اللهم صل على محمد وآل محمد وعجل فرجهم', 'target': 100},
+    {'title': 'دعاء الحفظ', 'text': 'بسم الله الرحمن الرحيم، لا حول ولا قوة إلا بالله العلي العظيم', 'target': 100},
   ];
   int selected = 0;
   int count = 0;
@@ -556,17 +560,24 @@ class _AdhkarPageState extends State<AdhkarPage> {
           children: [
             const Text('اختر الذكر', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            ...List.generate(adhkar.length, (i) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Card(
-                color: selected == i ? const Color(0xFF17483A) : panelGreen,
-                child: ListTile(
-                  title: Text(adhkar[i]['title'] as String),
-                  trailing: selected == i ? const Icon(Icons.check_circle, color: accentGold) : null,
-                  onTap: () { setState(() { selected = i; count = savedCounts[i]; }); _saveProgress(); },
+            SizedBox(
+              height: 220,
+              child: ListView.builder(
+                itemCount: adhkar.length,
+                itemBuilder: (context, i) => Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Card(
+                    color: selected == i ? const Color(0xFF17483A) : panelGreen,
+                    child: ListTile(
+                      dense: true,
+                      title: Text(adhkar[i]['title'] as String),
+                      trailing: selected == i ? const Icon(Icons.check_circle, color: accentGold) : null,
+                      onTap: () { setState(() { selected = i; count = savedCounts[i]; }); _saveProgress(); },
+                    ),
+                  ),
                 ),
               ),
-            )),
+            ),
             const Spacer(),
             Container(
               padding: const EdgeInsets.all(22),
