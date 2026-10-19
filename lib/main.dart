@@ -1646,6 +1646,15 @@ class _DuaLibraryPageState extends State<DuaLibraryPage> {
       const SizedBox(height: 8),
       const Text('فهرس مقسّم حسب النوع والمناسبة. بعض العناوين عامة أو متكررة وليست نصوصاً مستقلة. نضيف النصوص المأثورة كاملةً على مراحل بعد مراجعة المصادر، ولا ننسب صياغة عامة إلى أهل البيت عليهم السلام.', style: TextStyle(color: Colors.white60, height: 1.6)),
       const SizedBox(height: 14),
+      Card(color: panelGreen, child: Padding(padding: const EdgeInsets.all(14), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        const Row(children: [Icon(Icons.menu_book_rounded, color: accentGold), SizedBox(width: 8), Expanded(child: Text('مفاتيح الجنان — المكتبة الكاملة', style: TextStyle(color: accentGold, fontWeight: FontWeight.bold, fontSize: 16)))]),
+        const SizedBox(height: 6),
+        const Text('افتح النصوص الكاملة للأدعية والزيارات من المصدر، إلى أن ندمج النصوص الموثقة داخل التطبيق.', style: TextStyle(color: Colors.white70, height: 1.5)),
+        const SizedBox(height: 10),
+        FilledButton.icon(onPressed: () async { final uri = Uri.parse('https://alseraj.net/mafatih_al_jinan/'); if (!await launchUrl(uri, mode: LaunchMode.externalApplication) && context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تعذر فتح المصدر. تحقق من اتصال الإنترنت.'))); }, icon: const Icon(Icons.open_in_new), label: const Text('فتح مفاتيح الجنان — شبكة السراج')),
+        OutlinedButton.icon(onPressed: () async { final uri = Uri.parse('https://books.rafed.net/view/1731'); if (!await launchUrl(uri, mode: LaunchMode.externalApplication) && context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تعذر فتح المكتبة. تحقق من اتصال الإنترنت.'))); }, icon: const Icon(Icons.download_rounded), label: const Text('نسخة الكتاب وخيارات التنزيل — رافد')),
+      ]))),
+      const SizedBox(height: 14),
       TextField(controller: searchController, onChanged: (value) => setState(() => query = value), decoration: InputDecoration(hintText: 'ابحث عن دعاء أو قسم...', prefixIcon: const Icon(Icons.search_rounded), suffixIcon: query.isEmpty ? null : IconButton(icon: const Icon(Icons.close), onPressed: () { searchController.clear(); setState(() => query = ''); }), border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)))),
       const SizedBox(height: 12),
       for (final entry in filtered.entries)
