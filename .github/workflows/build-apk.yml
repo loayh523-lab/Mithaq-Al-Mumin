@@ -33,6 +33,8 @@ jobs:
         run: |
           if [ ! -d android ]; then
             flutter create --platforms=android --project-name mithaq_al_mumin --org com.mithaqalmumin .
+            # Flutter's scaffold adds a template test for MyApp, but this app uses its own entrypoint.
+            rm -f test/widget_test.dart
           fi
 
       - name: Enable Android core library desugaring
