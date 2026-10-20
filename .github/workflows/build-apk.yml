@@ -2,6 +2,8 @@ name: Build Android APK
 
 on:
   push:
+    branches: [main, 'rebuild/**']
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -31,6 +33,8 @@ jobs:
         run: |
           if [ ! -d android ]; then
             flutter create --platforms=android --project-name mithaq_al_mumin --org com.mithaqalmumin .
+            # Flutter's scaffold adds a template test for MyApp, but this app uses its own entrypoint.
+            rm -f test/widget_test.dart
           fi
 
       - name: Enable Android core library desugaring
@@ -57,49 +61,14 @@ jobs:
           p.write_text(s)
           PY
 
-      - name: Configure Android notification and location permissions
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('android/app/src/main/AndroidManifest.xml')
-          s = p.read_text()
-          permissions = [
-              '  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>',
-              '  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>',
-              '  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>',
-              '  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>',
-          ]
-          marker = '  <application'
-          if marker not in s:
-              raise SystemExit('Android manifest application tag not found')
-          missing = [x for x in permissions if x.split('"')[1] not in s]
-          if missing:
-              s = s.replace(marker, '\n'.join(missing) + '\n' + marker, 1)
-              p.write_text(s)
-          PY
-
-      - name: Download verified Uthmani Quran data
-        run: |
-          mkdir -p assets/quran
-          curl --fail --location --retry 3 --silent --show-error \
-            https://raw.githubusercontent.com/dotquran/corpus/main/processed/uthmani/quran-uthmani.json \
-            --output assets/quran/quran-uthmani.json
-          test -s assets/quran/quran-uthmani.json
-          grep -q '"source"[[:space:]]*:[[:space:]]*"Tanzil Project"' assets/quran/quran-uthmani.json
-          cat > assets/quran/ATTRIBUTION.txt <<'EOF'
-          Quran Arabic text: Tanzil Quran Text, Uthmani Version 1.1.
-          Copyright (C) Tanzil Project.
-          License: Creative Commons Attribution 3.0.
-          Source: https://tanzil.net/
-          The Quran text must not be modified. See https://tanzil.net/docs/Text_License
-          JSON packaging source: https://github.com/dotquran/corpus
-          EOF
-
       - name: Get dependencies
         run: flutter pub get
 
       - name: Analyze Dart code
-        run: flutter analyze lib --no-fatal-infos --no-fatal-warnings
+        run: flutter analyze lib test --no-fatal-infos --no-fatal-warnings
+
+      - name: Run widget tests
+        run: flutter test
 
       - name: Generate launcher icon from official logo
         run: |
